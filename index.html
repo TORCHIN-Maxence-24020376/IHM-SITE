@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation JavaFX - BUT2 Informatique</title>
+    <meta name="description" content="Documentation pédagogique JavaFX. Apprenez à créer des interfaces graphiques modernes en Java avec cette ressource complète.">
+    <title>Documentation JavaFX</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/pictures/logo.svg">
@@ -33,7 +34,20 @@
             <p>Bienvenue dans cette documentation sur JavaFX, la bibliothèque d'interfaces graphiques standard pour Java. Ce site est conçu pour vous aider à comprendre et maîtriser JavaFX dans le cadre de votre formation BUT2 Informatique.</p>
         </section>
 
-        <section class="section">
+        <!-- Sommaire flottant -->
+        <aside class="floating-toc">
+            <div class="toc-header">Sommaire</div>
+            <ul class="toc-list">
+                <li><a href="#quest-ce-que">Qu'est-ce que JavaFX ?</a></li>
+                <li><a href="#modele-theatre">Le modèle du théâtre</a></li>
+                <li><a href="#java-vs-javafx">Java vs JavaFX</a></li>
+                <li><a href="#plan-site">Plan du site</a></li>
+                <li><a href="#exemple-base">Exemple de base</a></li>
+            </ul>
+            <button class="toc-toggle">≡</button>
+        </aside>
+
+        <section class="section" id="quest-ce-que">
             <h2>Qu'est-ce que JavaFX ?</h2>
             <p>JavaFX est une bibliothèque graphique qui permet de créer des interfaces utilisateur riches, interactives et modernes pour des applications Java. Elle remplace l'ancienne bibliothèque Swing et offre de nombreuses fonctionnalités avancées :</p>
             <ul>
@@ -47,14 +61,14 @@
             </ul>
         </section>
 
-        <section class="section">
+        <section class="section" id="modele-theatre">
             <h2>Le modèle du théâtre</h2>
             <p>JavaFX utilise un modèle conceptuel basé sur la métaphore du théâtre pour organiser ses composants :</p>
             
             <div class="card">
                 <h3>Stage (Scène de théâtre)</h3>
                 <p>Le <span class="inline-code">Stage</span> représente la fenêtre principale de l'application. C'est le conteneur de plus haut niveau.</p>
-                <pre><code>Stage primaryStage = new Stage();
+                <pre><code class="language-java">Stage primaryStage = new Stage();
 primaryStage.setTitle("Mon application JavaFX");
 primaryStage.show();</code></pre>
             </div>
@@ -62,7 +76,7 @@ primaryStage.show();</code></pre>
             <div class="card">
                 <h3>Scene (Décor)</h3>
                 <p>La <span class="inline-code">Scene</span> est contenue dans le Stage et contient à son tour tous les éléments graphiques. On peut changer de Scene pour montrer différentes vues.</p>
-                <pre><code>VBox root = new VBox();
+                <pre><code class="language-java">VBox root = new VBox();
 Scene scene = new Scene(root, 800, 600);
 primaryStage.setScene(scene);</code></pre>
             </div>
@@ -70,13 +84,13 @@ primaryStage.setScene(scene);</code></pre>
             <div class="card">
                 <h3>Nodes (Acteurs)</h3>
                 <p>Les <span class="inline-code">Node</span> sont tous les éléments qui peuvent être placés dans une Scene : boutons, étiquettes, conteneurs, etc. Ils forment un graphe hiérarchique appelé "scene graph".</p>
-                <pre><code>Label label = new Label("Bonjour JavaFX");
+                <pre><code class="language-java">Label label = new Label("Bonjour JavaFX");
 Button button = new Button("Cliquez-moi");
 root.getChildren().addAll(label, button);</code></pre>
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="java-vs-javafx">
             <h2>Java vs JavaFX</h2>
             <table>
                 <thead>
@@ -121,7 +135,7 @@ root.getChildren().addAll(label, button);</code></pre>
             </table>
         </section>
 
-        <section class="section">
+        <section class="section" id="plan-site">
             <h2>Plan du site</h2>
             <div class="grid">
                 <div class="card">
@@ -152,10 +166,10 @@ root.getChildren().addAll(label, button);</code></pre>
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="exemple-base">
             <h2>Exemple de base</h2>
             <p>Voici un exemple minimal d'application JavaFX :</p>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;

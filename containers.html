@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conteneurs JavaFX - Documentation BUT2 Informatique</title>
+    <meta name="description" content="Découvrez les différents types de conteneurs JavaFX : VBox, HBox, BorderPane, GridPane, FlowPane, TilePane et StackPane pour organiser vos interfaces graphiques Java.">
+    <title>Conteneurs JavaFX</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/pictures/logo.svg">
@@ -24,8 +25,8 @@
         }
         
         .flex-item {
-            background-color: var(--accent-primary);
-            color: white;
+            background-color: var(--demo-item-bg);
+            color: var(--demo-item-text);
             padding: 1rem;
             border-radius: 4px;
             text-align: center;
@@ -58,7 +59,25 @@
             <p>Les conteneurs sont des éléments fondamentaux de JavaFX qui permettent d'organiser et d'arranger les composants graphiques dans l'interface utilisateur. Ils gèrent l'emplacement, la taille et l'organisation des contrôles qu'ils contiennent.</p>
         </section>
 
-        <section class="section">
+        <!-- Sommaire flottant -->
+        <aside class="floating-toc">
+            <div class="toc-header">Sommaire</div>
+            <ul class="toc-list">
+                <li><a href="#graphe-scene">Graphe de scène</a></li>
+                <li><a href="#vbox-hbox">VBox et HBox</a></li>
+                <li><a href="#borderpane">BorderPane</a></li>
+                <li><a href="#gridpane">GridPane</a></li>
+                <li><a href="#flowpane">FlowPane</a></li>
+                <li><a href="#tilepane">TilePane</a></li>
+                <li><a href="#stackpane">StackPane</a></li>
+                <li><a href="#anchorpane">AnchorPane</a></li>
+                <li><a href="#demo-visuelle">Démonstration visuelle</a></li>
+                <li><a href="#conseils">Conseils pratiques</a></li>
+            </ul>
+            <button class="toc-toggle">≡</button>
+        </aside>
+
+        <section class="section" id="graphe-scene">
             <h2>Rappel : le graphe de scène</h2>
             <p>Dans JavaFX, tous les éléments graphiques sont organisés en une structure hiérarchique appelée <strong>graphe de scène</strong> (Scene Graph). Ce graphe est composé de nœuds (Nodes) qui peuvent être :</p>
             <ul>
@@ -67,7 +86,7 @@
                 <li><strong>Conteneurs</strong> : éléments qui contiennent d'autres nœuds et définissent leur arrangement</li>
             </ul>
             <p>Les conteneurs sont donc les éléments structurants de l'interface graphique.</p>
-            <pre><code>// Structure typique d'un graphe de scène
+            <pre><code class="language-bash"># Structure typique d'un graphe de scène
 Stage (fenêtre)
   └─ Scene (conteneur racine)
      └─ BorderPane (conteneur principal)
@@ -88,13 +107,13 @@ Stage (fenêtre)
            └─ ProgressBar</code></pre>
         </section>
 
-        <section class="section">
+        <section class="section" id="vbox-hbox">
             <h2>VBox et HBox</h2>
             <p>Les conteneurs VBox et HBox sont parmi les plus simples et les plus utilisés. Ils arrangent leurs enfants en une ligne verticale (VBox) ou horizontale (HBox).</p>
             
             <h3>VBox</h3>
             <p>Empile les éléments verticalement, de haut en bas.</p>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -136,7 +155,7 @@ public class VBoxExample extends Application {
 
             <h3>HBox</h3>
             <p>Aligne les éléments horizontalement, de gauche à droite.</p>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -176,7 +195,7 @@ public class HBoxExample extends Application {
 
             <h3>Exemple équivalent en FXML</h3>
             <p>Voici comment définir un VBox en FXML :</p>
-            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+            <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;?import javafx.geometry.Insets?&gt;
 &lt;?import javafx.scene.control.Button?&gt;
@@ -198,10 +217,10 @@ public class HBoxExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/vbox-example.fxml</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="borderpane">
             <h2>BorderPane</h2>
             <p>Le BorderPane divise l'espace en cinq zones : TOP, BOTTOM, LEFT, RIGHT et CENTER. C'est idéal pour créer des mises en page classiques d'application avec menu, barre latérale et zone de contenu principale.</p>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -268,10 +287,10 @@ public class BorderPaneExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/BorderPaneExample.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="gridpane">
             <h2>GridPane</h2>
             <p>Le GridPane organise ses enfants dans une grille flexible de lignes et de colonnes. C'est idéal pour les formulaires et les interfaces tabulaires.</p>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -321,12 +340,12 @@ public class GridPaneExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/GridPaneExample.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="autres-conteneurs">
             <h2>Autres conteneurs</h2>
             
-            <h3>FlowPane</h3>
+            <h3 id="flowpane">FlowPane</h3>
             <p>Dispose les éléments les uns à côté des autres, puis passe à la ligne suivante lorsqu'il n'y a plus de place (comme un texte qui fait un retour à la ligne).</p>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -360,9 +379,9 @@ public class FlowPaneExample extends Application {
 }</code></pre>
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/FlowPaneExample.java</span></p>
 
-            <h3>TilePane</h3>
+            <h3 id="tilepane">TilePane</h3>
             <p>Similaire au FlowPane, mais tous les éléments ont la même taille, créant une grille uniforme.</p>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -401,9 +420,9 @@ public class TilePaneExample extends Application {
 }</code></pre>
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/TilePaneExample.java</span></p>
 
-            <h3>StackPane</h3>
+            <h3 id="stackpane">StackPane</h3>
             <p>Empile les éléments les uns sur les autres, comme des couches. Utile pour superposer des éléments ou créer des overlays.</p>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -439,24 +458,131 @@ public class StackPaneExample extends Application {
     }
 }</code></pre>
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/StackPaneExample.java</span></p>
+
+            <h3 id="anchorpane">AnchorPane</h3>
+            <p>L'AnchorPane permet d'ancrer les éléments enfants aux bords du conteneur ou entre eux, avec des distances spécifiques. C'est particulièrement utile pour créer des mises en page complexes qui doivent s'adapter à différentes tailles de fenêtre.</p>
+            <pre><code class="language-java">import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+public class AnchorPaneExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création de l'AnchorPane
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setPadding(new Insets(10));
+        
+        // Création des contrôles
+        Label titleLabel = new Label("Éditeur de notes");
+        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        
+        TextArea textArea = new TextArea();
+        textArea.setPromptText("Écrivez votre texte ici...");
+        
+        Button saveButton = new Button("Enregistrer");
+        Button cancelButton = new Button("Annuler");
+        
+        // Ajout des contrôles à l'AnchorPane
+        anchorPane.getChildren().addAll(titleLabel, textArea, saveButton, cancelButton);
+        
+        // Configuration des ancrages
+        
+        // Titre ancré en haut à gauche
+        AnchorPane.setTopAnchor(titleLabel, 10.0);
+        AnchorPane.setLeftAnchor(titleLabel, 10.0);
+        
+        // Zone de texte ancrée aux quatre côtés avec marge
+        AnchorPane.setTopAnchor(textArea, 40.0);
+        AnchorPane.setLeftAnchor(textArea, 10.0);
+        AnchorPane.setRightAnchor(textArea, 10.0);
+        AnchorPane.setBottomAnchor(textArea, 50.0);
+        
+        // Boutons ancrés en bas à droite
+        AnchorPane.setBottomAnchor(saveButton, 10.0);
+        AnchorPane.setRightAnchor(saveButton, 10.0);
+        
+        AnchorPane.setBottomAnchor(cancelButton, 10.0);
+        AnchorPane.setRightAnchor(cancelButton, 100.0);
+        
+        // Configuration de la scène
+        Scene scene = new Scene(anchorPane, 500, 400);
+        primaryStage.setTitle("Exemple AnchorPane");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/AnchorPaneExample.java</span></p>
+            
+            <p>L'AnchorPane est idéal pour :</p>
+            <ul>
+                <li>Interfaces qui doivent s'adapter dynamiquement à la taille de la fenêtre</li>
+                <li>Mise en page complexe avec positionnement précis des éléments</li>
+                <li>Création de zones de contenu redimensionnables</li>
+                <li>Interfaces où les éléments doivent maintenir une position relative entre eux</li>
+            </ul>
         </section>
 
-        <section class="section">
-            <h2>Démonstration interactive</h2>
-            <p>Cette démonstration montre visuellement la différence entre un HBox et un VBox. Le bouton permet de basculer entre les deux orientations :</p>
+        <section class="section" id="demo-visuelle">
+            <h2>Démonstration visuelle des conteneurs</h2>
+            <p>Cette image montre clairement les différents types de conteneurs JavaFX et comment ils organisent leurs éléments enfants :</p>
             
-            <div class="flex-demo">
-                <div class="flex-item">Élément 1</div>
-                <div class="flex-item">Élément 2</div>
-                <div class="flex-item">Élément 3</div>
+            <div class="container-image">
+                <img src="assets/pictures/javafx-conteneurs.png" alt="Types de conteneurs JavaFX" class="full-width-image">
             </div>
             
-            <button id="toggle-orientation" class="btn">Afficher comme VBox</button>
-            
-            <p>Dans JavaFX, le principe est le même : un HBox aligne horizontalement et un VBox verticalement.</p>
+            <div class="container-descriptions">
+                <div class="container-desc-item">
+                    <h3>VBox</h3>
+                    <p>Empile les éléments verticalement, de haut en bas. Parfait pour les formulaires et les listes d'éléments.</p>
+                </div>
+                
+                <div class="container-desc-item">
+                    <h3>HBox</h3>
+                    <p>Aligne les éléments horizontalement, de gauche à droite. Utile pour les barres d'outils, menus et alignements de contrôles.</p>
+                </div>
+                
+                <div class="container-desc-item">
+                    <h3>GridPane</h3>
+                    <p>Organise les éléments dans une grille de lignes et colonnes. Idéal pour les formulaires et les interfaces tabulaires.</p>
+                </div>
+                
+                <div class="container-desc-item">
+                    <h3>BorderPane</h3>
+                    <p>Divise l'espace en 5 zones : TOP, LEFT, CENTER, RIGHT et BOTTOM. Idéal pour les applications classiques avec menu, barre latérale et zone de contenu principale.</p>
+                </div>
+                
+                <div class="container-desc-item">
+                    <h3>StackPane</h3>
+                    <p>Empile les éléments les uns sur les autres. Parfait pour les superpositions et les overlays.</p>
+                </div>
+                
+                <div class="container-desc-item">
+                    <h3>FlowPane</h3>
+                    <p>Place les éléments les uns à côté des autres et passe à la ligne quand il n'y a plus de place. Similaire au comportement d'un texte.</p>
+                </div>
+                
+                <div class="container-desc-item">
+                    <h3>TilePane</h3>
+                    <p>Similaire à FlowPane, mais tous les éléments ont la même taille, créant une grille uniforme. Parfait pour les galeries d'images.</p>
+                </div>
+                
+                <div class="container-desc-item">
+                    <h3>AnchorPane</h3>
+                    <p>Permet d'ancrer les éléments enfants aux bords du conteneur ou entre eux, avec des distances spécifiques. Utile pour des mises en page complexes.</p>
+                </div>
+            </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="conseils">
             <h2>Conseils pratiques</h2>
             <ul>
                 <li><strong>Imbrication de conteneurs</strong> : N'hésitez pas à imbriquer des conteneurs pour créer des mises en page complexes. Par exemple, un BorderPane comme conteneur principal avec des VBox dans ses différentes régions.</li>

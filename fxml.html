@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guide complet sur l'utilisation de FXML pour séparer l'interface utilisateur et la logique métier dans les applications JavaFX. Apprenez le modèle MVC en JavaFX.">
     <title>FXML JavaFX - Documentation BUT2 Informatique</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -33,7 +34,22 @@
             <p>FXML est un langage de balisage basé sur XML qui permet de définir l'interface utilisateur JavaFX de manière déclarative, en séparant la présentation (FXML) de la logique métier (contrôleurs Java).</p>
         </section>
 
-        <section class="section">
+        <!-- Sommaire flottant -->
+        <aside class="floating-toc">
+            <div class="toc-header">Sommaire</div>
+            <ul class="toc-list">
+                <li><a href="#pourquoi-fxml">Pourquoi utiliser FXML</a></li>
+                <li><a href="#structure-fxml">Structure d'un fichier FXML</a></li>
+                <li><a href="#controleur">Association avec un contrôleur</a></li>
+                <li><a href="#chargement-fxml">Chargement d'un fichier FXML</a></li>
+                <li><a href="#injection-dependances">Injection de dépendances</a></li>
+                <li><a href="#exemple-complet">Exemple complet</a></li>
+                <li><a href="#bonnes-pratiques">Bonnes pratiques</a></li>
+            </ul>
+            <button class="toc-toggle">≡</button>
+        </aside>
+
+        <section class="section" id="pourquoi-fxml">
             <h2>Pourquoi utiliser FXML ?</h2>
             <p>L'utilisation de FXML présente plusieurs avantages par rapport à la création d'interfaces entièrement en Java :</p>
             <ul>
@@ -46,7 +62,7 @@
             <p>Prenons un exemple simple pour illustrer la différence entre les deux approches :</p>
             
             <h3>Interface créée en Java procédural</h3>
-            <pre><code>// Création de l'interface en Java
+            <pre><code class="language-java">// Création de l'interface en Java
 VBox root = new VBox(10);
 root.setPadding(new Insets(20));
 
@@ -70,7 +86,7 @@ root.getChildren().addAll(
 );</code></pre>
 
             <h3>Même interface en FXML</h3>
-            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+            <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;?import javafx.geometry.Insets?&gt;
 &lt;?import javafx.scene.control.Button?&gt;
@@ -95,12 +111,12 @@ root.getChildren().addAll(
 &lt;/VBox&gt;</code></pre>
         </section>
 
-        <section class="section">
+        <section class="section" id="structure-fxml">
             <h2>Structure d'un fichier FXML</h2>
             <p>Un fichier FXML typique contient les éléments suivants :</p>
 
             <h3>1. Entête XML et déclarations d'importation</h3>
-            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+            <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;?import javafx.scene.control.Button?&gt;
 &lt;?import javafx.scene.control.Label?&gt;
@@ -109,7 +125,7 @@ root.getChildren().addAll(
             <p>Les instructions <code>&lt;?import?&gt;</code> importent les classes JavaFX nécessaires, similaires aux imports en Java.</p>
 
             <h3>2. Élément racine</h3>
-            <pre><code>&lt;VBox xmlns:fx="http://javafx.com/fxml" 
+            <pre><code class="language-xml">&lt;VBox xmlns:fx="http://javafx.com/fxml" 
       fx:controller="com.example.javafxdemo.MyController"
       spacing="10" alignment="CENTER"&gt;
     &lt;!-- Contenu --&gt;
@@ -118,7 +134,7 @@ root.getChildren().addAll(
 
             <h3>3. Propriétés</h3>
             <p>Les propriétés peuvent être définies de plusieurs façons :</p>
-            <pre><code>&lt;!-- Comme attributs XML --&gt;
+            <pre><code class="language-xml">&lt;!-- Comme attributs XML --&gt;
 &lt;Button text="Cliquez-moi" textFill="blue" /&gt;
 
 &lt;!-- Comme éléments imbriqués --&gt;
@@ -137,7 +153,7 @@ root.getChildren().addAll(
 &lt;/VBox&gt;</code></pre>
 
             <h3>4. Enfants et contenu</h3>
-            <pre><code>&lt;VBox&gt;
+            <pre><code class="language-xml">&lt;VBox&gt;
     &lt;children&gt;
         &lt;Label text="Étiquette 1" /&gt;
         &lt;Button text="Bouton 1" /&gt;
@@ -160,7 +176,7 @@ root.getChildren().addAll(
                 <li><code>fx:value</code> - Valeur à définir pour une propriété</li>
                 <li><code>fx:constant</code> - Référence à une constante</li>
             </ul>
-            <pre><code>&lt;TextField fx:id="nameField" /&gt;
+            <pre><code class="language-xml">&lt;TextField fx:id="nameField" /&gt;
 &lt;ComboBox&gt;
     &lt;value&gt;
         &lt;fx:reference source="defaultItem" /&gt;
@@ -169,18 +185,18 @@ root.getChildren().addAll(
 &lt;Label alignment="fx:constant javafx.geometry.Pos.CENTER" /&gt;</code></pre>
         </section>
 
-        <section class="section">
+        <section class="section" id="controleur">
             <h2>Association avec un contrôleur</h2>
             <p>Le contrôleur contient la logique métier associée à l'interface FXML. Voici comment lier un contrôleur à une vue FXML :</p>
 
             <h3>1. Spécifier le contrôleur dans le FXML</h3>
-            <pre><code>&lt;VBox xmlns:fx="http://javafx.com/fxml" 
+            <pre><code class="language-xml">&lt;VBox xmlns:fx="http://javafx.com/fxml" 
       fx:controller="com.example.javafxdemo.HelloController"&gt;
     &lt;!-- Contenu --&gt;
 &lt;/VBox&gt;</code></pre>
 
             <h3>2. Définir les champs annotés @FXML dans le contrôleur</h3>
-            <pre><code>package com.example.javafxdemo;
+            <pre><code class="language-java">package com.example.javafxdemo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -198,7 +214,7 @@ public class HelloController {
             <p>L'annotation <code>@FXML</code> indique que le champ doit être injecté à partir d'un élément dans le fichier FXML ayant un <code>fx:id</code> correspondant.</p>
 
             <h3>3. Créer des gestionnaires d'événements dans le contrôleur</h3>
-            <pre><code>// Dans le contrôleur
+            <pre><code class="language-java">// Dans le contrôleur
 @FXML
 private void handleButtonClick() {
     String name = nameField.getText();
@@ -214,7 +230,7 @@ private void handleButtonClick() {
             <p>La méthode de gestion d'événement est annotée avec <code>@FXML</code> et référencée dans le FXML avec le préfixe <code>#</code>.</p>
 
             <h3>4. Méthode initialize()</h3>
-            <pre><code>@FXML
+            <pre><code class="language-java">@FXML
 private void initialize() {
     // Code exécuté après l'injection de tous les champs
     resultLabel.setText("Prêt !");
@@ -223,11 +239,11 @@ private void initialize() {
             <p>La méthode <code>initialize()</code> est appelée automatiquement par JavaFX après l'injection de tous les champs annotés <code>@FXML</code>. Elle permet d'initialiser l'état de l'interface.</p>
         </section>
 
-        <section class="section">
+        <section class="section" id="chargement-fxml">
             <h2>Chargement d'un fichier FXML</h2>
             <p>Pour utiliser un fichier FXML dans une application JavaFX, vous devez le charger à l'aide de la classe <code>FXMLLoader</code> :</p>
 
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -257,7 +273,7 @@ public class HelloApplication extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/HelloApplication.java</span></p>
 
             <p>Le fichier FXML correspondant :</p>
-            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+            <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;?import javafx.geometry.Insets?&gt;
 &lt;?import javafx.scene.control.Button?&gt;
@@ -280,7 +296,7 @@ public class HelloApplication extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/hello-view.fxml</span></p>
 
             <p>Et le contrôleur associé :</p>
-            <pre><code>package com.example.javafxdemo;
+            <pre><code class="language-java">package com.example.javafxdemo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -311,11 +327,11 @@ public class HelloController {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/HelloController.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="injection-dependances">
             <h2>Injection de dépendances via Constructor Injection</h2>
             <p>Par défaut, JavaFX crée une instance du contrôleur en utilisant son constructeur sans argument. Cependant, vous pouvez personnaliser la création du contrôleur en utilisant <code>setControllerFactory</code> pour implémenter l'injection de dépendances :</p>
 
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -359,7 +375,7 @@ public class DIApplication extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/DIApplication.java</span></p>
 
             <p>Le contrôleur avec injection par constructeur :</p>
-            <pre><code>package com.example.javafxdemo;
+            <pre><code class="language-java">package com.example.javafxdemo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -402,7 +418,7 @@ public class LoginController {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/LoginController.java</span></p>
 
             <p>Un service simple pour l'exemple :</p>
-            <pre><code>package com.example.javafxdemo;
+            <pre><code class="language-java">package com.example.javafxdemo;
 
 public class UserService {
     public boolean authenticate(String username, String password) {
@@ -418,12 +434,12 @@ public class UserService {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/UserService.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="exemple-complet">
             <h2>Exemple complet : Application de salutation</h2>
             <p>Voici un exemple complet d'une application JavaFX utilisant FXML, avec les fichiers correctement organisés :</p>
 
             <h3>Structure du projet</h3>
-            <pre><code>src/
+            <pre><code class="language-bash">src/
 ├── main/
 │   ├── java/
 │   │   ├── module-info.java
@@ -439,7 +455,7 @@ public class UserService {
 │                   └── hello-view.fxml</code></pre>
 
             <h3>module-info.java</h3>
-            <pre><code>module com.example.javafxdemo {
+            <pre><code class="language-java">module com.example.javafxdemo {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -449,7 +465,7 @@ public class UserService {
             <p>Ce code va dans <span class="inline-code">src/main/java/module-info.java</span></p>
 
             <h3>MainApplication.java</h3>
-            <pre><code>package com.example.javafxdemo;
+            <pre><code class="language-java">package com.example.javafxdemo;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -475,7 +491,7 @@ public class MainApplication extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/MainApplication.java</span></p>
 
             <h3>HelloController.java</h3>
-            <pre><code>package com.example.javafxdemo;
+            <pre><code class="language-java">package com.example.javafxdemo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -501,7 +517,7 @@ public class HelloController {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/HelloController.java</span></p>
 
             <h3>hello-view.fxml</h3>
-            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+            <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;?import javafx.geometry.Insets?&gt;
 &lt;?import javafx.scene.control.Button?&gt;
@@ -523,7 +539,7 @@ public class HelloController {
             <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/hello-view.fxml</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="bonnes-pratiques">
             <h2>Bonnes pratiques avec FXML</h2>
             <ul>
                 <li><strong>Nommage cohérent</strong> : utilisez des conventions de nommage cohérentes pour les fichiers FXML et leurs contrôleurs associés.</li>
@@ -534,7 +550,7 @@ public class HelloController {
                 <li><strong>Utilisation de fx:include</strong> : pour inclure d'autres fichiers FXML dans votre interface.</li>
             </ul>
 
-            <pre><code>&lt;!-- Utilisation de fx:include pour la modularité --&gt;
+            <pre><code class="language-xml">&lt;!-- Utilisation de fx:include pour la modularité --&gt;
 &lt;BorderPane xmlns:fx="http://javafx.com/fxml"&gt;
     &lt;top&gt;
         &lt;fx:include source="header.fxml"/&gt;

@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guide complet pour styliser vos applications JavaFX avec CSS. Apprenez à personnaliser l'apparence de vos interfaces graphiques JavaFX grâce au CSS.">
     <title>CSS JavaFX - Documentation BUT2 Informatique</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/pictures/logo.svg">
+</head>
 <body>
     <header>
         <div class="container header-container">
@@ -32,7 +34,23 @@
             <p>JavaFX intègre un puissant support CSS qui permet de personnaliser l'apparence des composants de l'interface utilisateur. Cette fonctionnalité permet de séparer le style visuel de la structure et du comportement de l'application.</p>
         </section>
 
-        <section class="section">
+        <!-- Sommaire flottant -->
+        <aside class="floating-toc">
+            <div class="toc-header">Sommaire</div>
+            <ul class="toc-list">
+                <li><a href="#introduction">Introduction au CSS</a></li>
+                <li><a href="#emplacement">Emplacement des fichiers</a></li>
+                <li><a href="#application">Application des styles CSS</a></li>
+                <li><a href="#selecteurs">Sélecteurs CSS</a></li>
+                <li><a href="#proprietes">Propriétés CSS courantes</a></li>
+                <li><a href="#exemple-formulaire">Exemple: style formulaire</a></li>
+                <li><a href="#themes">Thèmes clair/sombre</a></li>
+                <li><a href="#bonnes-pratiques">Bonnes pratiques</a></li>
+            </ul>
+            <button class="toc-toggle">≡</button>
+        </aside>
+
+        <section class="section" id="introduction">
             <h2>Introduction au CSS dans JavaFX</h2>
             <p>Le CSS (Cascading Style Sheets) dans JavaFX est similaire au CSS utilisé pour le web, mais avec quelques différences importantes :</p>
             <ul>
@@ -52,10 +70,10 @@
             </ul>
         </section>
 
-        <section class="section">
+        <section class="section" id="emplacement">
             <h2>Emplacement des fichiers CSS</h2>
             <p>Dans un projet Maven/Gradle standard, les fichiers CSS sont généralement placés dans le dossier des ressources :</p>
-            <pre><code>src/
+            <pre><code class="language-bash">src/
 ├── main/
 │   ├── java/
 │   │   └── com/
@@ -74,12 +92,12 @@
 │                       └── main-view.fxml</code></pre>
         </section>
 
-        <section class="section">
+        <section class="section" id="application">
             <h2>Application des styles CSS</h2>
             <p>Il existe plusieurs façons d'appliquer des styles CSS à une application JavaFX :</p>
 
             <h3>1. Via le code Java</h3>
-            <pre><code>// Application à toute la scène
+            <pre><code class="language-java">// Application à toute la scène
 Scene scene = new Scene(root, 800, 600);
 scene.getStylesheets().add(getClass().getResource("/com/example/javafxdemo/styles/application.css").toExternalForm());
 
@@ -92,7 +110,7 @@ Label title = new Label("Titre principal");
 title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3366cc;");</code></pre>
 
             <h3>2. Via FXML</h3>
-            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+            <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;?import javafx.scene.layout.VBox?&gt;
 &lt;?import javafx.scene.control.Button?&gt;
@@ -113,7 +131,7 @@ title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3366
 &lt;/VBox&gt;</code></pre>
         </section>
 
-        <section class="section">
+        <section class="section" id="selecteurs">
             <h2>Sélecteurs CSS dans JavaFX</h2>
             <p>JavaFX prend en charge la plupart des sélecteurs CSS standards :</p>
 
@@ -155,7 +173,7 @@ title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3366
             </table>
 
             <p>Exemple de fichier CSS pour JavaFX :</p>
-            <pre><code>/* Styles pour tous les boutons */
+            <pre><code class="language-css">/* Styles pour tous les boutons */
 .button {
     -fx-background-color: #3498db;
     -fx-text-fill: white;
@@ -198,12 +216,12 @@ title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3366
 }</code></pre>
         </section>
 
-        <section class="section">
+        <section class="section" id="proprietes">
             <h2>Propriétés CSS courantes dans JavaFX</h2>
             <p>Voici quelques-unes des propriétés CSS les plus utilisées dans JavaFX :</p>
 
             <h3>Texte et police</h3>
-            <pre><code>-fx-font-family: "Arial", sans-serif;
+            <pre><code class="language-css">-fx-font-family: "Arial", sans-serif;
 -fx-font-size: 14px;
 -fx-font-weight: bold; /* normal, bold, 700 */
 -fx-font-style: italic; /* normal, italic, oblique */
@@ -213,7 +231,7 @@ title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3366
 -fx-strikethrough: true;</code></pre>
 
             <h3>Fond et bordures</h3>
-            <pre><code>-fx-background-color: #f5f5f5;
+            <pre><code class="language-css">-fx-background-color: #f5f5f5;
 -fx-background-radius: 5px;
 -fx-border-color: #cccccc;
 -fx-border-width: 1px;
@@ -221,7 +239,7 @@ title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3366
 -fx-border-style: solid; /* solid, dotted, dashed */</code></pre>
 
             <h3>Dimensions et espacement</h3>
-            <pre><code>-fx-pref-width: 200px;
+            <pre><code class="language-css">-fx-pref-width: 200px;
 -fx-pref-height: 30px;
 -fx-min-width: 100px;
 -fx-max-width: 300px;
@@ -229,17 +247,17 @@ title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3366
 -fx-spacing: 10px; /* Pour VBox, HBox */</code></pre>
 
             <h3>Effets</h3>
-            <pre><code>-fx-opacity: 0.8;
+            <pre><code class="language-css">-fx-opacity: 0.8;
 -fx-cursor: hand;
 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 3);</code></pre>
         </section>
 
-        <section class="section">
+        <section class="section" id="exemple-formulaire">
             <h2>Exemple complet : Style d'un formulaire</h2>
             <p>Voici un exemple complet d'un formulaire JavaFX stylisé avec CSS :</p>
 
             <h3>FXML (form-view.fxml)</h3>
-            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+            <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;?import javafx.scene.control.*?&gt;
 &lt;?import javafx.scene.layout.*?&gt;
@@ -285,7 +303,7 @@ title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3366
             <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/views/form-view.fxml</span></p>
 
             <h3>CSS (form-style.css)</h3>
-            <pre><code>/* Styles pour le formulaire */
+            <pre><code class="language-css">/* Styles pour le formulaire */
 .form-container {
     -fx-background-color: white;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
@@ -383,7 +401,7 @@ title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3366
             <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/styles/form-style.css</span></p>
 
             <h3>Contrôleur (FormController.java)</h3>
-            <pre><code>package com.example.javafxdemo;
+            <pre><code class="language-java">package com.example.javafxdemo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -453,12 +471,12 @@ public class FormController {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/FormController.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="themes">
             <h2>Thèmes clair/sombre</h2>
             <p>Une application courante du CSS dans JavaFX est la création de thèmes clair et sombre que l'utilisateur peut changer à la volée.</p>
 
             <h3>Style commun (common.css)</h3>
-            <pre><code>/* Variables communes */
+            <pre><code class="language-css">/* Variables communes */
 * {
     -fx-font-family: "Segoe UI", Arial, sans-serif;
 }
@@ -477,7 +495,7 @@ public class FormController {
             <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/styles/common.css</span></p>
 
             <h3>Thème clair (light-theme.css)</h3>
-            <pre><code>/* Thème clair */
+            <pre><code class="language-css">/* Thème clair */
 .root {
     -fx-base: #ececec;
     -fx-background: #f5f5f5;
@@ -510,7 +528,7 @@ public class FormController {
             <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/styles/light-theme.css</span></p>
 
             <h3>Thème sombre (dark-theme.css)</h3>
-            <pre><code>/* Thème sombre */
+            <pre><code class="language-css">/* Thème sombre */
 .root {
     -fx-base: #2c3e50;
     -fx-background: #1a1a1a;
@@ -544,7 +562,7 @@ public class FormController {
             <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/styles/dark-theme.css</span></p>
 
             <h3>Application du thème dans le code Java</h3>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -604,7 +622,7 @@ public class ThemeApplication extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/ThemeApplication.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="bonnes-pratiques">
             <h2>Bonnes pratiques avec CSS dans JavaFX</h2>
             <ul>
                 <li><strong>Utiliser des variables CSS</strong> pour définir une palette de couleurs cohérente</li>
@@ -618,7 +636,7 @@ public class ThemeApplication extends Application {
             
             <div class="card">
                 <h3>Exemple de variables CSS pour une palette cohérente</h3>
-                <pre><code>/* Définition des variables de couleur */
+                <pre><code class="language-css">/* Définition des variables de couleur */
 .root {
     /* Couleurs primaires */
     -fx-color-primary: #3498db;

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez les propriétés et bindings JavaFX pour créer des interfaces réactives et synchronisées. Guide complet sur la liaison de données et les interfaces réactives en JavaFX.">
     <title>Binding JavaFX - Documentation BUT2 Informatique</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -33,11 +34,29 @@
             <p>Les propriétés et les bindings constituent l'un des aspects les plus puissants de JavaFX. Ils permettent de créer des interfaces réactives où les composants se mettent automatiquement à jour en fonction des changements d'état.</p>
         </section>
 
-        <section class="section">
+        <!-- Sommaire flottant -->
+        <aside class="floating-toc">
+            <div class="toc-header">Sommaire</div>
+            <ul class="toc-list">
+                <li><a href="#proprietes">Propriétés JavaFX</a></li>
+                <li><a href="#types-proprietes">Types de propriétés</a></li>
+                <li><a href="#creation-proprietes">Création de propriétés</a></li>
+                <li><a href="#binding-unidirectionnel">Binding unidirectionnel</a></li>
+                <li><a href="#binding-bidirectionnel">Binding bidirectionnel</a></li>
+                <li><a href="#changelistener">ChangeListener</a></li>
+                <li><a href="#bindings-avances">Bindings avancés</a></li>
+                <li><a href="#low-level">Low-level bindings</a></li>
+                <li><a href="#fenetre-listener">Listener taille de fenêtre</a></li>
+                <li><a href="#resume">Résumé et bonnes pratiques</a></li>
+            </ul>
+            <button class="toc-toggle">≡</button>
+        </aside>
+
+        <section class="section" id="proprietes">
             <h2>Propriétés JavaFX</h2>
             <p>Une <strong>propriété</strong> en JavaFX est une valeur observable qui peut notifier ses observateurs lorsque sa valeur change. Les propriétés sont la base du système de binding.</p>
 
-            <h3>Types de propriétés</h3>
+            <h3 id="types-proprietes">Types de propriétés</h3>
             <p>JavaFX fournit différents types de propriétés pour les types de données courants :</p>
 
             <table>
@@ -77,8 +96,8 @@
                 </tbody>
             </table>
 
-            <h3>Création et utilisation de propriétés</h3>
-            <pre><code>import javafx.beans.property.DoubleProperty;
+            <h3 id="creation-proprietes">Création et utilisation de propriétés</h3>
+            <pre><code class="language-java">import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -102,7 +121,7 @@ name.set("Produit B");</code></pre>
 
             <h3>Définition de propriétés dans une classe</h3>
             <p>Voici comment définir des propriétés dans vos propres classes :</p>
-            <pre><code>import javafx.beans.property.DoubleProperty;
+            <pre><code class="language-java">import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -149,12 +168,12 @@ public class Product {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/model/Product.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="binding-unidirectionnel">
             <h2>Binding unidirectionnel</h2>
             <p>Le binding unidirectionnel crée une dépendance à sens unique entre deux propriétés. Lorsque la propriété source change, la propriété cible est automatiquement mise à jour.</p>
             
             <h3>Exemple avec bind()</h3>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -211,12 +230,12 @@ public class UnidirectionalBindingExample extends Application {
             </ul>
         </section>
 
-        <section class="section">
+        <section class="section" id="binding-bidirectionnel">
             <h2>Binding bidirectionnel</h2>
             <p>Le binding bidirectionnel crée une dépendance à double sens entre deux propriétés. Lorsque l'une des propriétés change, l'autre est automatiquement mise à jour, et vice versa.</p>
             
             <h3>Exemple avec bindBidirectional()</h3>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
@@ -267,11 +286,11 @@ public class BidirectionalBindingExample extends Application {
             </ul>
         </section>
 
-        <section class="section">
+        <section class="section" id="changelistener">
             <h2>ChangeListener</h2>
             <p>Un <code>ChangeListener</code> permet d'exécuter du code personnalisé lorsqu'une propriété change de valeur.</p>
             
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -341,12 +360,12 @@ public class ChangeListenerExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/ChangeListenerExample.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="bindings-avances">
             <h2>Bindings avancés avec la classe Bindings</h2>
             <p>La classe <code>Bindings</code> fournit des méthodes statiques pour créer des bindings plus complexes, notamment des expressions conditionnelles.</p>
             
             <h3>Exemple de Bindings.when().then().otherwise()</h3>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -410,12 +429,12 @@ public class ConditionalBindingExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/ConditionalBindingExample.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="low-level">
             <h2>Low-level bindings</h2>
             <p>Vous pouvez créer des bindings personnalisés en étendant les classes de base comme <code>DoubleBinding</code>, <code>StringBinding</code>, etc. Cela vous permet de définir des calculs arbitrairement complexes.</p>
             
             <h3>Exemple : calculateur de mensualité de prêt</h3>
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -514,11 +533,11 @@ public class LoanCalculatorExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/LoanCalculatorExample.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="fenetre-listener">
             <h2>Listener pour les changements de taille de fenêtre</h2>
             <p>Un exemple pratique d'utilisation des propriétés est l'adaptation de votre interface aux changements de taille de la fenêtre.</p>
             
-            <pre><code>import javafx.application.Application;
+            <pre><code class="language-java">import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -568,7 +587,7 @@ public class ResizeListenerExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/ResizeListenerExample.java</span></p>
         </section>
 
-        <section class="section">
+        <section class="section" id="resume">
             <h2>Résumé et bonnes pratiques</h2>
             <ul>
                 <li><strong>Choisir le bon type de binding</strong> : unidirectionnel pour les dépendances simples, bidirectionnel pour la synchronisation entre contrôles.</li>
