@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS JavaFX - Documentation BUT2 Informatique</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">JavaFX Doc</a>
+            <nav>
+                <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="containers.html">Conteneurs</a></li>
+                    <li><a href="controls.html">Contrôles</a></li>
+                    <li><a href="binding.html">Binding</a></li>
+                    <li><a href="fxml.html">FXML</a></li>
+                    <li><a href="css.html">CSS</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" aria-label="Changer de thème">🌙</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1>Styliser JavaFX avec CSS</h1>
+            <p>JavaFX intègre un puissant support CSS qui permet de personnaliser l'apparence des composants de l'interface utilisateur. Cette fonctionnalité permet de séparer le style visuel de la structure et du comportement de l'application.</p>
+        </section>
+
+        <section class="section">
+            <h2>Introduction au CSS dans JavaFX</h2>
+            <p>Le CSS (Cascading Style Sheets) dans JavaFX est similaire au CSS utilisé pour le web, mais avec quelques différences importantes :</p>
+            <ul>
+                <li>Les propriétés CSS commencent par <code>-fx-</code> pour les distinguer des propriétés CSS standard</li>
+                <li>JavaFX utilise un sous-ensemble de CSS3 avec des extensions spécifiques</li>
+                <li>Les sélecteurs fonctionnent de manière similaire au CSS web</li>
+                <li>Les feuilles de style peuvent être appliquées à l'ensemble de l'application, à une scène spécifique ou à des nœuds individuels</li>
+            </ul>
+            
+            <h3>Avantages de l'utilisation du CSS dans JavaFX</h3>
+            <ul>
+                <li>Séparation claire entre l'apparence et la logique</li>
+                <li>Réutilisation des styles à travers l'application</li>
+                <li>Possibilité de changer l'apparence sans modifier le code Java</li>
+                <li>Facilité de création de thèmes (clair/sombre, etc.)</li>
+                <li>Personnalisation plus fine que ce que permettent les API Java</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Emplacement des fichiers CSS</h2>
+            <p>Dans un projet Maven/Gradle standard, les fichiers CSS sont généralement placés dans le dossier des ressources :</p>
+            <pre><code>src/
+├── main/
+│   ├── java/
+│   │   └── com/
+│   │       └── example/
+│   │           └── javafxdemo/
+│   │               └── MainApplication.java
+│   └── resources/
+│       └── com/
+│           └── example/
+│               └── javafxdemo/
+│                   ├── styles/
+│                   │   ├── application.css     // Style principal
+│                   │   ├── dark-theme.css      // Thème sombre
+│                   │   └── controls.css        // Styles pour les contrôles
+│                   └── views/
+│                       └── main-view.fxml</code></pre>
+        </section>
+
+        <section class="section">
+            <h2>Application des styles CSS</h2>
+            <p>Il existe plusieurs façons d'appliquer des styles CSS à une application JavaFX :</p>
+
+            <h3>1. Via le code Java</h3>
+            <pre><code>// Application à toute la scène
+Scene scene = new Scene(root, 800, 600);
+scene.getStylesheets().add(getClass().getResource("/com/example/javafxdemo/styles/application.css").toExternalForm());
+
+// Application à un nœud spécifique
+Button button = new Button("Cliquez-moi");
+button.getStylesheets().add(getClass().getResource("/com/example/javafxdemo/styles/button-styles.css").toExternalForm());
+
+// Styles inline (à éviter pour les applications complexes)
+Label title = new Label("Titre principal");
+title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3366cc;");</code></pre>
+
+            <h3>2. Via FXML</h3>
+            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;?import javafx.scene.layout.VBox?&gt;
+&lt;?import javafx.scene.control.Button?&gt;
+&lt;?import javafx.scene.control.Label?&gt;
+
+&lt;VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.javafxdemo.MainController"&gt;
+    &lt;stylesheets&gt;
+        &lt;URL value="@../styles/application.css" /&gt;
+        &lt;URL value="@../styles/controls.css" /&gt;
+    &lt;/stylesheets&gt;
+    
+    &lt;children&gt;
+        &lt;Label text="Titre" styleClass="title-label" /&gt;
+        &lt;Button text="Style par défaut" /&gt;
+        &lt;Button text="Style personnalisé" styleClass="custom-button" /&gt;
+        &lt;Button text="Style inline" style="-fx-background-color: #ff6666;" /&gt;
+    &lt;/children&gt;
+&lt;/VBox&gt;</code></pre>
+        </section>
+
+        <section class="section">
+            <h2>Sélecteurs CSS dans JavaFX</h2>
+            <p>JavaFX prend en charge la plupart des sélecteurs CSS standards :</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type de sélecteur</th>
+                        <th>Syntaxe</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Type de classe</td>
+                        <td><code>.class-name</code></td>
+                        <td><code>.button</code> - Tous les boutons</td>
+                    </tr>
+                    <tr>
+                        <td>ID</td>
+                        <td><code>#id-name</code></td>
+                        <td><code>#submit-button</code> - Élément avec fx:id="submit-button"</td>
+                    </tr>
+                    <tr>
+                        <td>Type d'élément</td>
+                        <td><code>element-type</code></td>
+                        <td><code>Button</code> - Tous les boutons</td>
+                    </tr>
+                    <tr>
+                        <td>Pseudo-classe</td>
+                        <td><code>element:pseudo-class</code></td>
+                        <td><code>.button:hover</code> - Boutons au survol</td>
+                    </tr>
+                    <tr>
+                        <td>Combinaison</td>
+                        <td><code>parent > child</code></td>
+                        <td><code>.vbox > .button</code> - Boutons enfants directs d'un VBox</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Exemple de fichier CSS pour JavaFX :</p>
+            <pre><code>/* Styles pour tous les boutons */
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+/* État survol */
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* État pressé */
+.button:pressed {
+    -fx-background-color: #1f618d;
+}
+
+/* Bouton de type danger */
+.button.danger-button {
+    -fx-background-color: #e74c3c;
+}
+
+/* Bouton désactivé */
+.button:disabled {
+    -fx-background-color: #bdc3c7;
+    -fx-opacity: 0.7;
+}
+
+/* Sélection par ID */
+#main-title {
+    -fx-font-size: 24px;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-weight: bold;
+}
+
+/* Sélecteur combiné */
+.vbox > .label {
+    -fx-padding: 5px;
+}</code></pre>
+        </section>
+
+        <section class="section">
+            <h2>Propriétés CSS courantes dans JavaFX</h2>
+            <p>Voici quelques-unes des propriétés CSS les plus utilisées dans JavaFX :</p>
+
+            <h3>Texte et police</h3>
+            <pre><code>-fx-font-family: "Arial", sans-serif;
+-fx-font-size: 14px;
+-fx-font-weight: bold; /* normal, bold, 700 */
+-fx-font-style: italic; /* normal, italic, oblique */
+-fx-text-fill: #333333;
+-fx-text-alignment: center; /* left, center, right, justify */
+-fx-underline: true;
+-fx-strikethrough: true;</code></pre>
+
+            <h3>Fond et bordures</h3>
+            <pre><code>-fx-background-color: #f5f5f5;
+-fx-background-radius: 5px;
+-fx-border-color: #cccccc;
+-fx-border-width: 1px;
+-fx-border-radius: 5px;
+-fx-border-style: solid; /* solid, dotted, dashed */</code></pre>
+
+            <h3>Dimensions et espacement</h3>
+            <pre><code>-fx-pref-width: 200px;
+-fx-pref-height: 30px;
+-fx-min-width: 100px;
+-fx-max-width: 300px;
+-fx-padding: 10px; /* haut droite bas gauche: 10px 15px 10px 15px */
+-fx-spacing: 10px; /* Pour VBox, HBox */</code></pre>
+
+            <h3>Effets</h3>
+            <pre><code>-fx-opacity: 0.8;
+-fx-cursor: hand;
+-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 3);</code></pre>
+        </section>
+
+        <section class="section">
+            <h2>Exemple complet : Style d'un formulaire</h2>
+            <p>Voici un exemple complet d'un formulaire JavaFX stylisé avec CSS :</p>
+
+            <h3>FXML (form-view.fxml)</h3>
+            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+&lt;?import javafx.geometry.Insets?&gt;
+
+&lt;GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.javafxdemo.FormController"
+          styleClass="form-container" hgap="10" vgap="10"&gt;
+    &lt;padding&gt;
+        &lt;Insets top="20" right="20" bottom="20" left="20"/&gt;
+    &lt;/padding&gt;
+    
+    &lt;stylesheets&gt;
+        &lt;URL value="@../styles/form-style.css"/&gt;
+    &lt;/stylesheets&gt;
+    
+    &lt;Label text="Formulaire d'inscription" styleClass="form-title" 
+           GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"/&gt;
+    
+    &lt;Label text="Nom :" GridPane.columnIndex="0" GridPane.rowIndex="1"/&gt;
+    &lt;TextField fx:id="nameField" promptText="Entrez votre nom" 
+             GridPane.columnIndex="1" GridPane.rowIndex="1"/&gt;
+    
+    &lt;Label text="Email :" GridPane.columnIndex="0" GridPane.rowIndex="2"/&gt;
+    &lt;TextField fx:id="emailField" promptText="Entrez votre email" 
+             GridPane.columnIndex="1" GridPane.rowIndex="2"/&gt;
+    
+    &lt;Label text="Mot de passe :" GridPane.columnIndex="0" GridPane.rowIndex="3"/&gt;
+    &lt;PasswordField fx:id="passwordField" promptText="Entrez votre mot de passe" 
+                  GridPane.columnIndex="1" GridPane.rowIndex="3"/&gt;
+    
+    &lt;CheckBox fx:id="agreeCheckbox" text="J'accepte les conditions d'utilisation" 
+             GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2"/&gt;
+    
+    &lt;HBox spacing="10" alignment="CENTER_RIGHT" 
+         GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2"&gt;
+        &lt;Button text="Annuler" styleClass="cancel-button" onAction="#handleCancel"/&gt;
+        &lt;Button text="S'inscrire" styleClass="submit-button" onAction="#handleSubmit"/&gt;
+    &lt;/HBox&gt;
+    
+    &lt;Label fx:id="statusLabel" styleClass="status-label" 
+           GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2"/&gt;
+&lt;/GridPane&gt;</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/views/form-view.fxml</span></p>
+
+            <h3>CSS (form-style.css)</h3>
+            <pre><code>/* Styles pour le formulaire */
+.form-container {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-background-radius: 8px;
+}
+
+.form-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 10px 0;
+}
+
+/* Styles pour les champs de saisie */
+.text-field, .password-field {
+    -fx-pref-height: 35px;
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 4px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 4px;
+    -fx-padding: 0 10px;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(three-pass-box, rgba(52, 152, 219, 0.2), 5, 0, 0, 0);
+}
+
+/* Styles pour les boutons */
+.button {
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.submit-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+}
+
+.submit-button:hover {
+    -fx-background-color: #27ae60;
+}
+
+.submit-button:pressed {
+    -fx-background-color: #229954;
+}
+
+.cancel-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7f8c8d;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4px;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #ecf0f1;
+}
+
+/* Style pour la case à cocher */
+.check-box {
+    -fx-padding: 10px 0;
+}
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 3px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #3498db;
+}
+
+/* Style pour l'étiquette de statut */
+.status-label {
+    -fx-padding: 10px 0 0 0;
+    -fx-font-style: italic;
+}
+
+.status-success {
+    -fx-text-fill: #2ecc71;
+}
+
+.status-error {
+    -fx-text-fill: #e74c3c;
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/styles/form-style.css</span></p>
+
+            <h3>Contrôleur (FormController.java)</h3>
+            <pre><code>package com.example.javafxdemo;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+
+public class FormController {
+    @FXML private TextField nameField;
+    @FXML private TextField emailField;
+    @FXML private PasswordField passwordField;
+    @FXML private CheckBox agreeCheckbox;
+    @FXML private Label statusLabel;
+    
+    @FXML
+    private void handleSubmit() {
+        if (!validateForm()) {
+            return;
+        }
+        
+        // Traitement du formulaire
+        statusLabel.setText("Inscription réussie !");
+        statusLabel.getStyleClass().remove("status-error");
+        statusLabel.getStyleClass().add("status-success");
+    }
+    
+    @FXML
+    private void handleCancel() {
+        nameField.clear();
+        emailField.clear();
+        passwordField.clear();
+        agreeCheckbox.setSelected(false);
+        statusLabel.setText("");
+    }
+    
+    private boolean validateForm() {
+        // Validation simple
+        if (nameField.getText().trim().isEmpty()) {
+            showError("Le nom est requis");
+            return false;
+        }
+        
+        if (emailField.getText().trim().isEmpty() || !emailField.getText().contains("@")) {
+            showError("Email invalide");
+            return false;
+        }
+        
+        if (passwordField.getText().length() < 6) {
+            showError("Le mot de passe doit contenir au moins 6 caractères");
+            return false;
+        }
+        
+        if (!agreeCheckbox.isSelected()) {
+            showError("Vous devez accepter les conditions d'utilisation");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private void showError(String message) {
+        statusLabel.setText(message);
+        statusLabel.getStyleClass().remove("status-success");
+        statusLabel.getStyleClass().add("status-error");
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/FormController.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Thèmes clair/sombre</h2>
+            <p>Une application courante du CSS dans JavaFX est la création de thèmes clair et sombre que l'utilisateur peut changer à la volée.</p>
+
+            <h3>Style commun (common.css)</h3>
+            <pre><code>/* Variables communes */
+* {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Classes utilitaires */
+.container {
+    -fx-padding: 20px;
+}
+
+/* Styles de base pour les boutons */
+.button {
+    -fx-padding: 8px 15px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/styles/common.css</span></p>
+
+            <h3>Thème clair (light-theme.css)</h3>
+            <pre><code>/* Thème clair */
+.root {
+    -fx-base: #ececec;
+    -fx-background: #f5f5f5;
+    -fx-control-inner-background: white;
+    -fx-text-fill: #333333;
+    -fx-accent: #3498db;
+}
+
+.title {
+    -fx-text-fill: #2c3e50;
+}
+
+.label {
+    -fx-text-fill: #333333;
+}
+
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/styles/light-theme.css</span></p>
+
+            <h3>Thème sombre (dark-theme.css)</h3>
+            <pre><code>/* Thème sombre */
+.root {
+    -fx-base: #2c3e50;
+    -fx-background: #1a1a1a;
+    -fx-control-inner-background: #2c3e50;
+    -fx-text-fill: #ecf0f1;
+    -fx-accent: #3498db;
+}
+
+.title {
+    -fx-text-fill: #ecf0f1;
+}
+
+.label {
+    -fx-text-fill: #ecf0f1;
+}
+
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.text-field {
+    -fx-background-color: #34495e;
+    -fx-border-color: #2c3e50;
+    -fx-text-fill: #ecf0f1;
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/styles/dark-theme.css</span></p>
+
+            <h3>Application du thème dans le code Java</h3>
+            <pre><code>import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class ThemeApplication extends Application {
+    private Scene scene;
+    private boolean isDarkTheme = false;
+    
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        // Chargement de la vue principale
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("views/main-view.fxml"));
+        Parent root = loader.load();
+        
+        // Création de la scène avec le thème par défaut (clair)
+        scene = new Scene(root, 800, 600);
+        scene.getStylesheets().add(getClass().getResource("styles/common.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("styles/light-theme.css").toExternalForm());
+        
+        // Bouton pour changer de thème (ajouté directement dans le code pour l'exemple)
+        Button themeToggle = new Button("Basculer en mode sombre");
+        themeToggle.setOnAction(e -> toggleTheme(themeToggle));
+        
+        // Ajout du bouton à la vue
+        ((VBox) root).getChildren().add(0, themeToggle);
+        
+        // Configuration et affichage
+        primaryStage.setTitle("Application avec thèmes");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    private void toggleTheme(Button themeToggle) {
+        // Suppression du thème actuel
+        scene.getStylesheets().remove(1);
+        
+        if (isDarkTheme) {
+            // Passage au thème clair
+            scene.getStylesheets().add(getClass().getResource("styles/light-theme.css").toExternalForm());
+            themeToggle.setText("Basculer en mode sombre");
+        } else {
+            // Passage au thème sombre
+            scene.getStylesheets().add(getClass().getResource("styles/dark-theme.css").toExternalForm());
+            themeToggle.setText("Basculer en mode clair");
+        }
+        
+        isDarkTheme = !isDarkTheme;
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/ThemeApplication.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Bonnes pratiques avec CSS dans JavaFX</h2>
+            <ul>
+                <li><strong>Utiliser des variables CSS</strong> pour définir une palette de couleurs cohérente</li>
+                <li><strong>Structurer les feuilles de style</strong> de manière logique (séparation par thème, par type de contrôle, etc.)</li>
+                <li><strong>Éviter le style inline</strong> autant que possible</li>
+                <li><strong>Préférer les classes CSS</strong> aux sélecteurs d'ID pour les styles réutilisables</li>
+                <li><strong>Commenter le code CSS</strong> pour expliquer les styles complexes</li>
+                <li><strong>Rester cohérent</strong> dans les noms de classes et les conventions de style</li>
+                <li><strong>Tester sur différentes tailles d'écran</strong> pour s'assurer que l'interface s'adapte correctement</li>
+            </ul>
+            
+            <div class="card">
+                <h3>Exemple de variables CSS pour une palette cohérente</h3>
+                <pre><code>/* Définition des variables de couleur */
+.root {
+    /* Couleurs primaires */
+    -fx-color-primary: #3498db;
+    -fx-color-primary-dark: #2980b9;
+    -fx-color-primary-light: #a9cce3;
+    
+    /* Couleurs secondaires */
+    -fx-color-secondary: #2ecc71;
+    -fx-color-secondary-dark: #27ae60;
+    
+    /* Couleurs d'alerte */
+    -fx-color-success: #2ecc71;
+    -fx-color-warning: #f39c12;
+    -fx-color-danger: #e74c3c;
+    
+    /* Couleurs neutres */
+    -fx-color-text: #333333;
+    -fx-color-text-light: #7f8c8d;
+    -fx-color-background: #f5f5f5;
+    -fx-color-border: #bdc3c7;
+}
+
+/* Utilisation des variables */
+.button.primary {
+    -fx-background-color: -fx-color-primary;
+    -fx-text-fill: white;
+}
+
+.button.primary:hover {
+    -fx-background-color: -fx-color-primary-dark;
+}
+
+.label.error {
+    -fx-text-fill: -fx-color-danger;
+}</code></pre>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Documentation JavaFX pour BUT2 Informatique</p>
+            <p>Licence MIT</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html> 

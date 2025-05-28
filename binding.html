@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binding JavaFX - Documentation BUT2 Informatique</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">JavaFX Doc</a>
+            <nav>
+                <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="containers.html">Conteneurs</a></li>
+                    <li><a href="controls.html">Contrôles</a></li>
+                    <li><a href="binding.html">Binding</a></li>
+                    <li><a href="fxml.html">FXML</a></li>
+                    <li><a href="css.html">CSS</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" aria-label="Changer de thème">🌙</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1>Propriétés et Bindings en JavaFX</h1>
+            <p>Les propriétés et les bindings constituent l'un des aspects les plus puissants de JavaFX. Ils permettent de créer des interfaces réactives où les composants se mettent automatiquement à jour en fonction des changements d'état.</p>
+        </section>
+
+        <section class="section">
+            <h2>Propriétés JavaFX</h2>
+            <p>Une <strong>propriété</strong> en JavaFX est une valeur observable qui peut notifier ses observateurs lorsque sa valeur change. Les propriétés sont la base du système de binding.</p>
+
+            <h3>Types de propriétés</h3>
+            <p>JavaFX fournit différents types de propriétés pour les types de données courants :</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type Java</th>
+                        <th>Type de propriété</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>boolean</td>
+                        <td>BooleanProperty</td>
+                        <td>visibleProperty(), disableProperty()</td>
+                    </tr>
+                    <tr>
+                        <td>int</td>
+                        <td>IntegerProperty</td>
+                        <td>tabCountProperty()</td>
+                    </tr>
+                    <tr>
+                        <td>double</td>
+                        <td>DoubleProperty</td>
+                        <td>opacityProperty(), widthProperty()</td>
+                    </tr>
+                    <tr>
+                        <td>String</td>
+                        <td>StringProperty</td>
+                        <td>textProperty(), titleProperty()</td>
+                    </tr>
+                    <tr>
+                        <td>Object</td>
+                        <td>ObjectProperty&lt;T&gt;</td>
+                        <td>styleProperty(), valueProperty()</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Création et utilisation de propriétés</h3>
+            <pre><code>import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+// Création d'une propriété double
+DoubleProperty price = new SimpleDoubleProperty(19.99);
+
+// Accès à la valeur
+double currentPrice = price.get();
+System.out.println("Prix actuel : " + currentPrice);
+
+// Modification de la valeur
+price.set(24.99);
+
+// Création d'une propriété String
+StringProperty name = new SimpleStringProperty("Produit A");
+
+// Accès et modification
+System.out.println("Nom : " + name.get());
+name.set("Produit B");</code></pre>
+
+            <h3>Définition de propriétés dans une classe</h3>
+            <p>Voici comment définir des propriétés dans vos propres classes :</p>
+            <pre><code>import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+public class Product {
+    // Propriétés privées
+    private final StringProperty name = new SimpleStringProperty();
+    private final DoubleProperty price = new SimpleDoubleProperty();
+    
+    // Constructeur
+    public Product(String name, double price) {
+        this.name.set(name);
+        this.price.set(price);
+    }
+    
+    // Getters et setters pour la valeur
+    public String getName() {
+        return name.get();
+    }
+    
+    public void setName(String value) {
+        name.set(value);
+    }
+    
+    // Getter pour la propriété elle-même
+    public StringProperty nameProperty() {
+        return name;
+    }
+    
+    // Getters et setters pour le prix
+    public double getPrice() {
+        return price.get();
+    }
+    
+    public void setPrice(double value) {
+        price.set(value);
+    }
+    
+    // Getter pour la propriété elle-même
+    public DoubleProperty priceProperty() {
+        return price;
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/model/Product.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Binding unidirectionnel</h2>
+            <p>Le binding unidirectionnel crée une dépendance à sens unique entre deux propriétés. Lorsque la propriété source change, la propriété cible est automatiquement mise à jour.</p>
+            
+            <h3>Exemple avec bind()</h3>
+            <pre><code>import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+
+public class UnidirectionalBindingExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création des contrôles
+        Label radiusLabel = new Label("Rayon: 50");
+        Slider radiusSlider = new Slider(10, 150, 50);
+        radiusSlider.setShowTickLabels(true);
+        radiusSlider.setShowTickMarks(true);
+        
+        // Création du cercle
+        Circle circle = new Circle();
+        circle.setRadius(50);
+        circle.setStyle("-fx-fill: cornflowerblue;");
+        
+        // Binding unidirectionnel entre le slider et le rayon du cercle
+        circle.radiusProperty().bind(radiusSlider.valueProperty());
+        
+        // Mise à jour du label quand le slider change
+        radiusSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            radiusLabel.setText(String.format("Rayon: %.0f", newVal));
+        });
+        
+        // Mise en page
+        VBox root = new VBox(20);
+        root.setPadding(new Insets(20));
+        root.getChildren().addAll(radiusLabel, radiusSlider, circle);
+        
+        // Configuration et affichage
+        Scene scene = new Scene(root, 300, 350);
+        primaryStage.setTitle("Binding Unidirectionnel");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/UnidirectionalBindingExample.java</span></p>
+
+            <p>Points importants à noter sur le binding unidirectionnel :</p>
+            <ul>
+                <li>La propriété liée (cible) ne peut pas être modifiée directement tant que le binding est actif</li>
+                <li>Seule la propriété source peut être modifiée</li>
+                <li>Pour supprimer le binding, utilisez <code>unbind()</code></li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Binding bidirectionnel</h2>
+            <p>Le binding bidirectionnel crée une dépendance à double sens entre deux propriétés. Lorsque l'une des propriétés change, l'autre est automatiquement mise à jour, et vice versa.</p>
+            
+            <h3>Exemple avec bindBidirectional()</h3>
+            <pre><code>import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
+
+public class BidirectionalBindingExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création des contrôles
+        TextField numberField = new TextField("50");
+        Slider slider = new Slider(0, 100, 50);
+        slider.setShowTickLabels(true);
+        slider.setShowTickMarks(true);
+        slider.setBlockIncrement(5);
+        
+        // Binding bidirectionnel entre le TextField et le Slider
+        // Nous avons besoin d'un convertisseur pour convertir entre String et Number
+        StringConverter<Number> converter = new NumberStringConverter();
+        numberField.textProperty().bindBidirectional(slider.valueProperty(), converter);
+        
+        // Mise en page
+        VBox root = new VBox(20);
+        root.setPadding(new Insets(20));
+        root.getChildren().addAll(numberField, slider);
+        
+        // Configuration et affichage
+        Scene scene = new Scene(root, 300, 150);
+        primaryStage.setTitle("Binding Bidirectionnel");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/BidirectionalBindingExample.java</span></p>
+
+            <p>Points importants à noter sur le binding bidirectionnel :</p>
+            <ul>
+                <li>Les deux propriétés peuvent être modifiées, et les changements sont propagés mutuellement</li>
+                <li>Pour les bindings entre différents types (comme String et Number), un convertisseur est nécessaire</li>
+                <li>Pour supprimer le binding, utilisez <code>unbindBidirectional()</code></li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>ChangeListener</h2>
+            <p>Un <code>ChangeListener</code> permet d'exécuter du code personnalisé lorsqu'une propriété change de valeur.</p>
+            
+            <pre><code>import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+public class ChangeListenerExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création des contrôles
+        Label temperatureLabel = new Label("Température: 20°C");
+        Slider temperatureSlider = new Slider(0, 40, 20);
+        temperatureSlider.setShowTickLabels(true);
+        temperatureSlider.setShowTickMarks(true);
+        temperatureSlider.setMajorTickUnit(10);
+        temperatureSlider.setMinorTickCount(9);
+        
+        // Création d'un rectangle qui change de couleur selon la température
+        Rectangle temperatureIndicator = new Rectangle(250, 40);
+        temperatureIndicator.setArcWidth(20);
+        temperatureIndicator.setArcHeight(20);
+        updateColor(temperatureIndicator, 20); // Couleur initiale
+        
+        // Ajout d'un ChangeListener au slider
+        temperatureSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            double temp = newValue.doubleValue();
+            temperatureLabel.setText(String.format("Température: %.1f°C", temp));
+            updateColor(temperatureIndicator, temp);
+            
+            // Ajouter une alerte si la température est trop élevée
+            if (temp > 30) {
+                temperatureLabel.setTextFill(Color.RED);
+                temperatureLabel.setText(temperatureLabel.getText() + " (ALERTE: Trop chaud!)");
+            } else {
+                temperatureLabel.setTextFill(Color.BLACK);
+            }
+        });
+        
+        // Mise en page
+        VBox root = new VBox(20);
+        root.setPadding(new Insets(20));
+        root.getChildren().addAll(temperatureLabel, temperatureSlider, temperatureIndicator);
+        
+        // Configuration et affichage
+        Scene scene = new Scene(root, 300, 200);
+        primaryStage.setTitle("ChangeListener Example");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    // Méthode pour mettre à jour la couleur en fonction de la température
+    private void updateColor(Rectangle rect, double temperature) {
+        // Du bleu (froid) au rouge (chaud)
+        double hue = 240 - (temperature / 40.0 * 240);
+        Color color = Color.hsb(hue, 0.8, 0.9);
+        rect.setFill(color);
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/ChangeListenerExample.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Bindings avancés avec la classe Bindings</h2>
+            <p>La classe <code>Bindings</code> fournit des méthodes statiques pour créer des bindings plus complexes, notamment des expressions conditionnelles.</p>
+            
+            <h3>Exemple de Bindings.when().then().otherwise()</h3>
+            <pre><code>import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+
+public class ConditionalBindingExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création des contrôles
+        Label valueLabel = new Label("Valeur: 50");
+        Slider valueSlider = new Slider(0, 100, 50);
+        valueSlider.setShowTickLabels(true);
+        valueSlider.setMajorTickUnit(20);
+        
+        // Création d'un cercle
+        Circle circle = new Circle(50);
+        circle.setStroke(Color.BLACK);
+        
+        // Binding conditionnel pour la couleur du cercle
+        circle.fillProperty().bind(
+            Bindings.when(valueSlider.valueProperty().lessThan(25))
+                .then(Color.RED)         // Si < 25, rouge
+                .otherwise(
+                    Bindings.when(valueSlider.valueProperty().lessThan(75))
+                        .then(Color.YELLOW)   // Si entre 25 et 75, jaune
+                        .otherwise(Color.GREEN)  // Si > 75, vert
+                )
+        );
+        
+        // Binding pour modifier la taille du cercle en fonction du slider
+        circle.radiusProperty().bind(
+            valueSlider.valueProperty().divide(2).add(25)
+        );
+        
+        // Mise à jour du label
+        valueSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            valueLabel.setText(String.format("Valeur: %.0f", newVal));
+        });
+        
+        // Mise en page
+        VBox root = new VBox(20);
+        root.setPadding(new Insets(20));
+        root.getChildren().addAll(valueLabel, valueSlider, circle);
+        
+        // Configuration et affichage
+        Scene scene = new Scene(root, 300, 350);
+        primaryStage.setTitle("Binding Conditionnel");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/ConditionalBindingExample.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Low-level bindings</h2>
+            <p>Vous pouvez créer des bindings personnalisés en étendant les classes de base comme <code>DoubleBinding</code>, <code>StringBinding</code>, etc. Cela vous permet de définir des calculs arbitrairement complexes.</p>
+            
+            <h3>Exemple : calculateur de mensualité de prêt</h3>
+            <pre><code>import javafx.application.Application;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
+
+public class LoanCalculatorExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Propriétés pour le calcul du prêt
+        DoubleProperty loanAmount = new SimpleDoubleProperty(100000);
+        DoubleProperty interestRate = new SimpleDoubleProperty(3.5);
+        DoubleProperty loanTerm = new SimpleDoubleProperty(20);
+        
+        // Création des contrôles
+        Label amountLabel = new Label("Montant du prêt (€):");
+        TextField amountField = new TextField();
+        amountField.textProperty().bindBidirectional(loanAmount, new NumberStringConverter());
+        
+        Label rateLabel = new Label("Taux d'intérêt (%):");
+        Slider rateSlider = new Slider(1, 10, 3.5);
+        rateSlider.setShowTickLabels(true);
+        rateSlider.setShowTickMarks(true);
+        rateSlider.setMajorTickUnit(1);
+        rateSlider.valueProperty().bindBidirectional(interestRate);
+        
+        Label termLabel = new Label("Durée (années):");
+        Slider termSlider = new Slider(5, 30, 20);
+        termSlider.setShowTickLabels(true);
+        termSlider.setShowTickMarks(true);
+        termSlider.setMajorTickUnit(5);
+        termSlider.setMinorTickCount(4);
+        termSlider.valueProperty().bindBidirectional(loanTerm);
+        
+        // Création d'un binding personnalisé pour calculer la mensualité
+        DoubleBinding monthlyPayment = new DoubleBinding() {
+            {
+                // Indiquer les dépendances
+                super.bind(loanAmount, interestRate, loanTerm);
+            }
+            
+            @Override
+            protected double computeValue() {
+                double P = loanAmount.get();
+                double r = interestRate.get() / 100 / 12; // Taux mensuel
+                double n = loanTerm.get() * 12; // Nombre de paiements
+                
+                // Formule de calcul de la mensualité
+                // M = P * (r * (1 + r)^n) / ((1 + r)^n - 1)
+                if (r == 0) return P / n; // Cas spécial: taux zéro
+                return P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            }
+        };
+        
+        // Affichage du résultat
+        Label resultLabel = new Label();
+        // Mise à jour du label quand le binding change
+        monthlyPayment.addListener((obs, oldVal, newVal) -> {
+            resultLabel.setText(String.format("Mensualité: %.2f €", newVal));
+        });
+        // Déclenchement initial
+        resultLabel.setText(String.format("Mensualité: %.2f €", monthlyPayment.get()));
+        
+        // Mise en page
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(20));
+        grid.setHgap(10);
+        grid.setVgap(10);
+        
+        grid.add(amountLabel, 0, 0);
+        grid.add(amountField, 1, 0);
+        grid.add(rateLabel, 0, 1);
+        grid.add(rateSlider, 1, 1);
+        grid.add(termLabel, 0, 2);
+        grid.add(termSlider, 1, 2);
+        grid.add(resultLabel, 0, 3, 2, 1);
+        
+        // Configuration et affichage
+        Scene scene = new Scene(grid, 400, 200);
+        primaryStage.setTitle("Calculateur de Prêt");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/LoanCalculatorExample.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Listener pour les changements de taille de fenêtre</h2>
+            <p>Un exemple pratique d'utilisation des propriétés est l'adaptation de votre interface aux changements de taille de la fenêtre.</p>
+            
+            <pre><code>import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+
+public class ResizeListenerExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création d'un conteneur
+        Pane root = new Pane();
+        root.setPadding(new Insets(20));
+        
+        // Création d'un cercle qui suit la taille de la fenêtre
+        Circle circle = new Circle();
+        circle.setFill(Color.CORNFLOWERBLUE);
+        circle.setStroke(Color.BLACK);
+        
+        // Binding du centre du cercle au centre de la fenêtre
+        circle.centerXProperty().bind(root.widthProperty().divide(2));
+        circle.centerYProperty().bind(root.heightProperty().divide(2));
+        
+        // Binding du rayon à 40% de la plus petite dimension
+        circle.radiusProperty().bind(
+            Bindings.min(
+                root.widthProperty().divide(2),
+                root.heightProperty().divide(2)
+            ).multiply(0.4)
+        );
+        
+        // Ajout du cercle au conteneur
+        root.getChildren().add(circle);
+        
+        // Configuration et affichage
+        Scene scene = new Scene(root, 400, 300);
+        primaryStage.setTitle("Redimensionnement Réactif");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/ResizeListenerExample.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Résumé et bonnes pratiques</h2>
+            <ul>
+                <li><strong>Choisir le bon type de binding</strong> : unidirectionnel pour les dépendances simples, bidirectionnel pour la synchronisation entre contrôles.</li>
+                <li><strong>Éviter les cycles</strong> : les bindings bidirectionnels peuvent créer des boucles infinies si mal configurés.</li>
+                <li><strong>Nettoyer les bindings</strong> : utilisez <code>unbind()</code> ou <code>unbindBidirectional()</code> lorsqu'un binding n'est plus nécessaire pour éviter les fuites de mémoire.</li>
+                <li><strong>Préférer les bindings aux listeners</strong> pour le code déclaratif et la réactivité.</li>
+                <li><strong>Utiliser les bindings de haut niveau</strong> (Bindings.when().then().otherwise()) pour les conditions simples, et les bindings personnalisés pour les calculs complexes.</li>
+            </ul>
+
+            <div class="card">
+                <h3>Points clés à retenir</h3>
+                <ul>
+                    <li><code>property.bind(otherProperty)</code> - Binding unidirectionnel, property suit otherProperty</li>
+                    <li><code>property.bindBidirectional(otherProperty)</code> - Binding bidirectionnel, les deux propriétés se synchronisent</li>
+                    <li><code>property.addListener((obs, oldVal, newVal) -> { ... })</code> - Exécute du code à chaque changement</li>
+                    <li><code>Bindings.when(condition).then(value1).otherwise(value2)</code> - Binding conditionnel</li>
+                    <li>Pour les bindings personnalisés, étendez les classes comme <code>DoubleBinding</code>, <code>StringBinding</code>, etc.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Documentation JavaFX pour BUT2 Informatique</p>
+            <p>Licence MIT</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html> 

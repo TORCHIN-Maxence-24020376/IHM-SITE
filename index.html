@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation JavaFX - BUT2 Informatique</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">JavaFX Doc</a>
+            <nav>
+                <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="containers.html">Conteneurs</a></li>
+                    <li><a href="controls.html">Contrôles</a></li>
+                    <li><a href="binding.html">Binding</a></li>
+                    <li><a href="fxml.html">FXML</a></li>
+                    <li><a href="css.html">CSS</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" aria-label="Changer de thème">🌙</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1>JavaFX : Construire des interfaces graphiques modernes en Java</h1>
+            <p>Bienvenue dans cette documentation sur JavaFX, la bibliothèque d'interfaces graphiques standard pour Java. Ce site est conçu pour vous aider à comprendre et maîtriser JavaFX dans le cadre de votre formation BUT2 Informatique.</p>
+        </section>
+
+        <section class="section">
+            <h2>Qu'est-ce que JavaFX ?</h2>
+            <p>JavaFX est une bibliothèque graphique qui permet de créer des interfaces utilisateur riches, interactives et modernes pour des applications Java. Elle remplace l'ancienne bibliothèque Swing et offre de nombreuses fonctionnalités avancées :</p>
+            <ul>
+                <li>Un modèle de conteneurs hiérarchique et flexible</li>
+                <li>Des contrôles graphiques modernes et personnalisables</li>
+                <li>Un système d'événements puissant</li>
+                <li>La séparation de la présentation et de la logique avec FXML</li>
+                <li>La personnalisation via CSS</li>
+                <li>Un système de propriétés et de binding réactif</li>
+                <li>Des animations et effets visuels</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Le modèle du théâtre</h2>
+            <p>JavaFX utilise un modèle conceptuel basé sur la métaphore du théâtre pour organiser ses composants :</p>
+            
+            <div class="card">
+                <h3>Stage (Scène de théâtre)</h3>
+                <p>Le <span class="inline-code">Stage</span> représente la fenêtre principale de l'application. C'est le conteneur de plus haut niveau.</p>
+                <pre><code>Stage primaryStage = new Stage();
+primaryStage.setTitle("Mon application JavaFX");
+primaryStage.show();</code></pre>
+            </div>
+            
+            <div class="card">
+                <h3>Scene (Décor)</h3>
+                <p>La <span class="inline-code">Scene</span> est contenue dans le Stage et contient à son tour tous les éléments graphiques. On peut changer de Scene pour montrer différentes vues.</p>
+                <pre><code>VBox root = new VBox();
+Scene scene = new Scene(root, 800, 600);
+primaryStage.setScene(scene);</code></pre>
+            </div>
+            
+            <div class="card">
+                <h3>Nodes (Acteurs)</h3>
+                <p>Les <span class="inline-code">Node</span> sont tous les éléments qui peuvent être placés dans une Scene : boutons, étiquettes, conteneurs, etc. Ils forment un graphe hiérarchique appelé "scene graph".</p>
+                <pre><code>Label label = new Label("Bonjour JavaFX");
+Button button = new Button("Cliquez-moi");
+root.getChildren().addAll(label, button);</code></pre>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Java vs JavaFX</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concept Java</th>
+                        <th>Équivalent JavaFX</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Variables</td>
+                        <td>Propriétés</td>
+                        <td>Les propriétés sont observables et peuvent déclencher des actions lorsqu'elles changent</td>
+                    </tr>
+                    <tr>
+                        <td>Classes</td>
+                        <td>Nodes</td>
+                        <td>Les composants visuels héritent tous de la classe Node</td>
+                    </tr>
+                    <tr>
+                        <td>Listeners</td>
+                        <td>EventHandlers</td>
+                        <td>Traitent les événements utilisateur comme les clics, frappes clavier, etc.</td>
+                    </tr>
+                    <tr>
+                        <td>Annotations</td>
+                        <td>@FXML</td>
+                        <td>Permet d'injecter des éléments définis en FXML dans le code Java</td>
+                    </tr>
+                    <tr>
+                        <td>Multithreading</td>
+                        <td>Platform.runLater()</td>
+                        <td>Exécute du code sur le thread JavaFX pour manipuler l'interface</td>
+                    </tr>
+                    <tr>
+                        <td>Layouts (manuels)</td>
+                        <td>Conteneurs (automatiques)</td>
+                        <td>Les conteneurs gèrent automatiquement la disposition des éléments enfants</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2>Plan du site</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Conteneurs</h3>
+                    <p>Découvrez les différents types de conteneurs pour organiser votre interface : VBox, HBox, BorderPane, GridPane, etc.</p>
+                    <a href="containers.html" class="btn">Explorer</a>
+                </div>
+                <div class="card">
+                    <h3>Contrôles</h3>
+                    <p>Apprenez à utiliser les contrôles de base et à gérer les événements : Label, Button, TextField, etc.</p>
+                    <a href="controls.html" class="btn">Explorer</a>
+                </div>
+                <div class="card">
+                    <h3>Binding</h3>
+                    <p>Maîtrisez les propriétés et les bindings pour créer des interfaces réactives et synchronisées.</p>
+                    <a href="binding.html" class="btn">Explorer</a>
+                </div>
+                <div class="card">
+                    <h3>FXML</h3>
+                    <p>Séparez la présentation et la logique avec FXML et utilisez les contrôleurs pour une architecture MVC.</p>
+                    <a href="fxml.html" class="btn">Explorer</a>
+                </div>
+                <div class="card">
+                    <h3>CSS</h3>
+                    <p>Stylisez vos interfaces JavaFX avec CSS pour un design personnalisé et attrayant.</p>
+                    <a href="css.html" class="btn">Explorer</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Exemple de base</h2>
+            <p>Voici un exemple minimal d'application JavaFX :</p>
+            <pre><code>import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+public class HelloWorld extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Créer un conteneur
+        StackPane root = new StackPane();
+        
+        // Ajouter un contrôle
+        Label label = new Label("Bonjour, JavaFX !");
+        root.getChildren().add(label);
+        
+        // Créer une scène
+        Scene scene = new Scene(root, 300, 200);
+        
+        // Configurer le stage
+        primaryStage.setTitle("Hello JavaFX");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        // Lancer l'application
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/HelloWorld.java</span></p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Documentation JavaFX pour BUT2 Informatique</p>
+            <p>Licence MIT</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html> 

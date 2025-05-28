@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrôles JavaFX - Documentation BUT2 Informatique</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">JavaFX Doc</a>
+            <nav>
+                <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="containers.html">Conteneurs</a></li>
+                    <li><a href="controls.html">Contrôles</a></li>
+                    <li><a href="binding.html">Binding</a></li>
+                    <li><a href="fxml.html">FXML</a></li>
+                    <li><a href="css.html">CSS</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" aria-label="Changer de thème">🌙</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1>Les contrôles JavaFX et la gestion des événements</h1>
+            <p>Les contrôles sont les éléments interactifs d'une interface utilisateur JavaFX. Ils permettent à l'utilisateur de visualiser des informations et d'interagir avec l'application. Cette page présente les contrôles de base et la manière de gérer les événements qui leur sont associés.</p>
+        </section>
+
+        <section class="section">
+            <h2>Contrôles de base</h2>
+            <p>JavaFX propose une large gamme de contrôles prêts à l'emploi. Voici les plus couramment utilisés :</p>
+
+            <h3>Label</h3>
+            <p>Un contrôle simple qui affiche du texte non modifiable par l'utilisateur.</p>
+            <pre><code>Label simpleLabel = new Label("Texte simple");
+
+// Label avec mise en forme
+Label formattedLabel = new Label("Texte en gras");
+formattedLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: blue;");
+
+// Label avec graphique
+Label iconLabel = new Label("Important");
+iconLabel.setGraphic(new ImageView(new Image("warning.png")));
+iconLabel.setContentDisplay(ContentDisplay.LEFT); // Icône à gauche du texte</code></pre>
+
+            <h3>TextField et TextArea</h3>
+            <p>Contrôles permettant la saisie de texte par l'utilisateur. TextField est sur une ligne, TextArea sur plusieurs.</p>
+            <pre><code>// Champ texte simple
+TextField nameField = new TextField();
+nameField.setPromptText("Entrez votre nom"); // Texte d'invite (placeholder)
+
+// Champ avec validation
+TextField emailField = new TextField();
+emailField.textProperty().addListener((observable, oldValue, newValue) -> {
+    if (newValue.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+        emailField.setStyle("-fx-border-color: green;");
+    } else {
+        emailField.setStyle("-fx-border-color: red;");
+    }
+});
+
+// Zone de texte multi-lignes
+TextArea commentArea = new TextArea();
+commentArea.setPrefRowCount(5); // Hauteur préférée en nombre de lignes
+commentArea.setWrapText(true);  // Retour à la ligne automatique</code></pre>
+
+            <h3>Button</h3>
+            <p>Bouton standard qui déclenche une action lorsqu'il est cliqué.</p>
+            <pre><code>// Bouton simple avec texte
+Button submitButton = new Button("Valider");
+
+// Bouton avec icône
+Button saveButton = new Button("Enregistrer");
+saveButton.setGraphic(new ImageView(new Image("save.png")));
+
+// Bouton avec style personnalisé
+Button dangerButton = new Button("Supprimer");
+dangerButton.getStyleClass().add("danger-button"); // Classe CSS personnalisée</code></pre>
+
+            <h3>CheckBox</h3>
+            <p>Case à cocher permettant de sélectionner/désélectionner une option.</p>
+            <pre><code>// Case à cocher simple
+CheckBox rememberMeCheckbox = new CheckBox("Se souvenir de moi");
+
+// Vérifier l'état
+if (rememberMeCheckbox.isSelected()) {
+    // Action si cochée
+}
+
+// Réagir aux changements d'état
+rememberMeCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+    System.out.println("Case à cocher : " + (newValue ? "cochée" : "décochée"));
+});</code></pre>
+
+            <h3>RadioButton</h3>
+            <p>Bouton radio permettant de sélectionner une option parmi un groupe d'options.</p>
+            <pre><code>// Création d'un groupe pour les boutons radio
+ToggleGroup paymentGroup = new ToggleGroup();
+
+// Création des boutons radio
+RadioButton creditCardRadio = new RadioButton("Carte de crédit");
+RadioButton paypalRadio = new RadioButton("PayPal");
+RadioButton bankTransferRadio = new RadioButton("Virement bancaire");
+
+// Ajout des boutons au groupe
+creditCardRadio.setToggleGroup(paymentGroup);
+paypalRadio.setToggleGroup(paymentGroup);
+bankTransferRadio.setToggleGroup(paymentGroup);
+
+// Sélection par défaut
+creditCardRadio.setSelected(true);
+
+// Récupérer la sélection
+RadioButton selectedRadio = (RadioButton) paymentGroup.getSelectedToggle();
+String paymentMethod = selectedRadio.getText();</code></pre>
+
+            <h3>ComboBox et ChoiceBox</h3>
+            <p>Listes déroulantes permettant de sélectionner une valeur parmi plusieurs options.</p>
+            <pre><code>// ComboBox (permet la saisie et la recherche)
+ComboBox<String> countryComboBox = new ComboBox<>();
+countryComboBox.getItems().addAll("France", "Allemagne", "Espagne", "Italie", "Royaume-Uni");
+countryComboBox.setPromptText("Sélectionnez un pays");
+
+// ChoiceBox (plus simple, sans saisie)
+ChoiceBox<String> genderChoice = new ChoiceBox<>();
+genderChoice.getItems().addAll("Homme", "Femme", "Non-binaire", "Préfère ne pas préciser");
+genderChoice.setValue("Préfère ne pas préciser"); // Valeur par défaut</code></pre>
+
+            <h3>Slider</h3>
+            <p>Curseur permettant de sélectionner une valeur numérique dans une plage définie.</p>
+            <pre><code>// Slider simple
+Slider volumeSlider = new Slider(0, 100, 50); // min, max, valeur initiale
+volumeSlider.setShowTickLabels(true);        // Afficher les étiquettes
+volumeSlider.setShowTickMarks(true);         // Afficher les graduations
+volumeSlider.setMajorTickUnit(20);           // Graduation principale tous les 20
+volumeSlider.setMinorTickCount(4);           // 4 graduations mineures entre chaque graduation principale
+volumeSlider.setBlockIncrement(10);          // Incrément lors des clics sur la piste</code></pre>
+
+            <h3>DatePicker</h3>
+            <p>Contrôle permettant de sélectionner une date dans un calendrier.</p>
+            <pre><code>// DatePicker simple
+DatePicker birthDatePicker = new DatePicker();
+birthDatePicker.setPromptText("Date de naissance");
+
+// Avec une date par défaut
+DatePicker startDatePicker = new DatePicker(LocalDate.now());
+
+// Récupérer la date sélectionnée
+LocalDate selectedDate = startDatePicker.getValue();</code></pre>
+        </section>
+
+        <section class="section">
+            <h2>Gestionnaires d'événements</h2>
+            <p>JavaFX utilise un système d'événements pour permettre aux contrôles de réagir aux actions de l'utilisateur. Il existe plusieurs façons de gérer ces événements.</p>
+
+            <h3>setOnAction avec lambda</h3>
+            <p>La méthode la plus simple pour les contrôles qui déclenchent une seule action principale (comme les boutons).</p>
+            <pre><code>Button submitButton = new Button("Envoyer");
+submitButton.setOnAction(event -> {
+    System.out.println("Formulaire envoyé !");
+    // Traiter l'envoi du formulaire...
+});
+
+TextField usernameField = new TextField();
+usernameField.setOnAction(event -> {
+    // Action quand l'utilisateur appuie sur Entrée dans le champ
+    System.out.println("Nom d'utilisateur soumis : " + usernameField.getText());
+});</code></pre>
+
+            <h3>addEventHandler avec interface EventHandler</h3>
+            <p>Approche plus détaillée qui permet de gérer différents types d'événements et d'ajouter plusieurs gestionnaires pour le même type d'événement.</p>
+            <pre><code>Button loginButton = new Button("Connexion");
+
+// Utilisation d'une classe anonyme implémentant EventHandler
+loginButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+    @Override
+    public void handle(ActionEvent event) {
+        System.out.println("Tentative de connexion");
+        // Logique de connexion...
+    }
+});
+
+// Version équivalente avec lambda
+loginButton.addEventHandler(ActionEvent.ACTION, event -> {
+    System.out.println("Tentative de connexion");
+    // Logique de connexion...
+});</code></pre>
+
+            <h3>Différence entre source et target</h3>
+            <p>Dans un événement JavaFX, la <strong>source</strong> est le contrôle qui a généré l'événement, tandis que la <strong>target</strong> est le contrôle qui a reçu l'événement (ils peuvent être différents en cas de propagation d'événements).</p>
+            <pre><code>button.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+    Node source = (Node) event.getSource(); // Le bouton qui a généré l'événement
+    Node target = (Node) event.getTarget(); // Peut être le bouton ou un élément à l'intérieur
+    
+    System.out.println("Source : " + source);
+    System.out.println("Target : " + target);
+    
+    // La source et la target peuvent être différentes si le bouton contient d'autres éléments
+    // comme une icône (ImageView) ou un texte stylisé
+});</code></pre>
+        </section>
+
+        <section class="section">
+            <h2>Exemple complet : champ secret + message</h2>
+            <p>Voici un exemple qui montre un champ de texte "secret" et affiche un message spécial lorsque l'utilisateur tape un mot-clé particulier.</p>
+            <pre><code>import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+public class SecretFieldExample extends Application {
+    
+    private static final String SECRET_WORD = "ET";
+    
+    @Override
+    public void start(Stage primaryStage) {
+        // Création des contrôles
+        Label instructionLabel = new Label("Entrez un message secret :");
+        TextField secretField = new TextField();
+        Label resultLabel = new Label("Surveillez cet espace...");
+        resultLabel.setTextFill(Color.GRAY);
+        
+        // Gestionnaire d'événements avec lambda
+        secretField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.toUpperCase().contains(SECRET_WORD)) {
+                resultLabel.setText("E.T. repéré! Appelez la NASA!");
+                resultLabel.setTextFill(Color.GREEN);
+            } else {
+                resultLabel.setText("Surveillez cet espace...");
+                resultLabel.setTextFill(Color.GRAY);
+            }
+        });
+        
+        // Mise en page
+        VBox root = new VBox(10);
+        root.setPadding(new Insets(20));
+        root.getChildren().addAll(instructionLabel, secretField, resultLabel);
+        
+        // Configuration et affichage de la scène
+        Scene scene = new Scene(root, 350, 150);
+        primaryStage.setTitle("Détecteur de secrets");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/SecretFieldExample.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Exemple multi-handlers et removeEventHandler</h2>
+            <p>Cet exemple montre comment ajouter et retirer plusieurs gestionnaires d'événements sur un même contrôle.</p>
+            <pre><code>import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class MultiHandlersExample extends Application {
+    
+    @Override
+    public void start(Stage primaryStage) {
+        // Création des contrôles
+        Button actionButton = new Button("Cliquez-moi");
+        Label resultLabel = new Label("Résultats des actions:");
+        CheckBox enableLoggingCheckBox = new CheckBox("Activer la journalisation");
+        enableLoggingCheckBox.setSelected(true);
+        
+        // Création des gestionnaires d'événements
+        EventHandler<ActionEvent> countClickHandler = event -> {
+            resultLabel.setText(resultLabel.getText() + "\nBouton cliqué !");
+        };
+        
+        EventHandler<ActionEvent> loggingHandler = event -> {
+            System.out.println("LOG: Bouton cliqué à " + java.time.LocalTime.now());
+        };
+        
+        // Ajout des gestionnaires
+        actionButton.addEventHandler(ActionEvent.ACTION, countClickHandler);
+        actionButton.addEventHandler(ActionEvent.ACTION, loggingHandler);
+        
+        // Gestionnaire pour activer/désactiver la journalisation
+        enableLoggingCheckBox.selectedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                // Ajouter le gestionnaire de journalisation
+                actionButton.addEventHandler(ActionEvent.ACTION, loggingHandler);
+                System.out.println("Journalisation activée");
+            } else {
+                // Retirer le gestionnaire de journalisation
+                actionButton.removeEventHandler(ActionEvent.ACTION, loggingHandler);
+                System.out.println("Journalisation désactivée");
+            }
+        });
+        
+        // Mise en page
+        VBox root = new VBox(10);
+        root.setPadding(new Insets(20));
+        root.getChildren().addAll(
+            enableLoggingCheckBox,
+            actionButton,
+            resultLabel
+        );
+        
+        // Configuration et affichage de la scène
+        Scene scene = new Scene(root, 400, 300);
+        primaryStage.setTitle("Exemple de multi-gestionnaires");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/MultiHandlersExample.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Types d'événements courants</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type d'événement</th>
+                        <th>Description</th>
+                        <th>Exemple d'utilisation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ActionEvent</td>
+                        <td>Déclenché par un contrôle quand l'action principale est exécutée</td>
+                        <td>Clic sur un bouton, appui sur Entrée dans un TextField</td>
+                    </tr>
+                    <tr>
+                        <td>MouseEvent</td>
+                        <td>Événements liés à la souris</td>
+                        <td>MOUSE_CLICKED, MOUSE_PRESSED, MOUSE_RELEASED, MOUSE_MOVED, MOUSE_ENTERED, MOUSE_EXITED</td>
+                    </tr>
+                    <tr>
+                        <td>KeyEvent</td>
+                        <td>Événements liés au clavier</td>
+                        <td>KEY_PRESSED, KEY_RELEASED, KEY_TYPED</td>
+                    </tr>
+                    <tr>
+                        <td>WindowEvent</td>
+                        <td>Événements liés à la fenêtre</td>
+                        <td>WINDOW_SHOWING, WINDOW_SHOWN, WINDOW_HIDING, WINDOW_HIDDEN, WINDOW_CLOSE_REQUEST</td>
+                    </tr>
+                    <tr>
+                        <td>ScrollEvent</td>
+                        <td>Événements de défilement</td>
+                        <td>SCROLL, SCROLL_STARTED, SCROLL_FINISHED</td>
+                    </tr>
+                    <tr>
+                        <td>DragEvent</td>
+                        <td>Événements de glisser-déposer</td>
+                        <td>DRAG_ENTERED, DRAG_EXITED, DRAG_OVER, DRAG_DROPPED</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2>Conseils pratiques</h2>
+            <ul>
+                <li><strong>Utiliser les lambdas</strong> pour des gestionnaires d'événements courts et lisibles.</li>
+                <li><strong>Séparer la logique métier</strong> des gestionnaires d'événements pour maintenir le code propre.</li>
+                <li><strong>Préférer setOnXXX</strong> pour les événements simples et <strong>addEventHandler</strong> pour les cas plus complexes ou multiples.</li>
+                <li><strong>Gérer les exceptions</strong> dans les gestionnaires d'événements pour éviter que l'application ne plante.</li>
+                <li><strong>Utiliser Platform.runLater()</strong> pour mettre à jour l'interface depuis un thread différent du thread JavaFX.</li>
+            </ul>
+            <pre><code>// Exemple d'utilisation de Platform.runLater()
+new Thread(() -> {
+    // Opération longue dans un thread séparé
+    // ...
+    
+    // Mise à jour de l'interface dans le thread JavaFX
+    Platform.runLater(() -> {
+        label.setText("Opération terminée");
+        progressBar.setVisible(false);
+    });
+}).start();</code></pre>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Documentation JavaFX pour BUT2 Informatique</p>
+            <p>Licence MIT</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html> 

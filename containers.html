@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conteneurs JavaFX - Documentation BUT2 Informatique</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Styles spécifiques à la démo des conteneurs */
+        .flex-demo {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            gap: 10px;
+        }
+        
+        .flex-demo.flex-column {
+            flex-direction: column;
+        }
+        
+        .flex-item {
+            background-color: var(--accent-primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">JavaFX Doc</a>
+            <nav>
+                <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="containers.html">Conteneurs</a></li>
+                    <li><a href="controls.html">Contrôles</a></li>
+                    <li><a href="binding.html">Binding</a></li>
+                    <li><a href="fxml.html">FXML</a></li>
+                    <li><a href="css.html">CSS</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" aria-label="Changer de thème">🌙</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h1>Les conteneurs JavaFX</h1>
+            <p>Les conteneurs sont des éléments fondamentaux de JavaFX qui permettent d'organiser et d'arranger les composants graphiques dans l'interface utilisateur. Ils gèrent l'emplacement, la taille et l'organisation des contrôles qu'ils contiennent.</p>
+        </section>
+
+        <section class="section">
+            <h2>Rappel : le graphe de scène</h2>
+            <p>Dans JavaFX, tous les éléments graphiques sont organisés en une structure hiérarchique appelée <strong>graphe de scène</strong> (Scene Graph). Ce graphe est composé de nœuds (Nodes) qui peuvent être :</p>
+            <ul>
+                <li><strong>Contrôles</strong> : éléments interactifs comme des boutons, des champs texte, etc.</li>
+                <li><strong>Formes</strong> : éléments graphiques comme des rectangles, des cercles, etc.</li>
+                <li><strong>Conteneurs</strong> : éléments qui contiennent d'autres nœuds et définissent leur arrangement</li>
+            </ul>
+            <p>Les conteneurs sont donc les éléments structurants de l'interface graphique.</p>
+            <pre><code>// Structure typique d'un graphe de scène
+Stage (fenêtre)
+  └─ Scene (conteneur racine)
+     └─ BorderPane (conteneur principal)
+        ├─ MenuBar (en haut)
+        ├─ VBox (à gauche - navigation)
+        │  ├─ Button
+        │  ├─ Button
+        │  └─ Button
+        ├─ TabPane (au centre - contenu principal)
+        │  ├─ Tab
+        │  │  └─ GridPane (formulaire)
+        │  │     ├─ Label + TextField
+        │  │     ├─ Label + TextField
+        │  │     └─ Button
+        │  └─ Tab
+        └─ HBox (en bas - barre d'état)
+           ├─ Label
+           └─ ProgressBar</code></pre>
+        </section>
+
+        <section class="section">
+            <h2>VBox et HBox</h2>
+            <p>Les conteneurs VBox et HBox sont parmi les plus simples et les plus utilisés. Ils arrangent leurs enfants en une ligne verticale (VBox) ou horizontale (HBox).</p>
+            
+            <h3>VBox</h3>
+            <p>Empile les éléments verticalement, de haut en bas.</p>
+            <pre><code>import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class VBoxExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création d'un VBox
+        VBox vbox = new VBox();
+        
+        // Configuration des marges et espacement
+        vbox.setPadding(new Insets(10));  // Marges extérieures
+        vbox.setSpacing(8);               // Espace entre les éléments
+        
+        // Ajout des contrôles
+        Label nameLabel = new Label("Nom :");
+        TextField nameField = new TextField();
+        Button submitButton = new Button("Valider");
+        
+        // Ajout des contrôles au VBox
+        vbox.getChildren().addAll(nameLabel, nameField, submitButton);
+        
+        // Configuration de la scène
+        Scene scene = new Scene(vbox, 300, 150);
+        primaryStage.setTitle("Exemple VBox");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/VBoxExample.java</span></p>
+
+            <h3>HBox</h3>
+            <p>Aligne les éléments horizontalement, de gauche à droite.</p>
+            <pre><code>import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+public class HBoxExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création d'un HBox
+        HBox hbox = new HBox();
+        
+        // Configuration des marges et espacement
+        hbox.setPadding(new Insets(10));  // Marges extérieures
+        hbox.setSpacing(10);              // Espace entre les éléments
+        
+        // Création de boutons
+        Button button1 = new Button("Bouton 1");
+        Button button2 = new Button("Bouton 2");
+        Button button3 = new Button("Bouton 3");
+        
+        // Ajout des boutons au HBox
+        hbox.getChildren().addAll(button1, button2, button3);
+        
+        // Configuration de la scène
+        Scene scene = new Scene(hbox, 300, 80);
+        primaryStage.setTitle("Exemple HBox");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/HBoxExample.java</span></p>
+
+            <h3>Exemple équivalent en FXML</h3>
+            <p>Voici comment définir un VBox en FXML :</p>
+            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;?import javafx.geometry.Insets?&gt;
+&lt;?import javafx.scene.control.Button?&gt;
+&lt;?import javafx.scene.control.Label?&gt;
+&lt;?import javafx.scene.control.TextField?&gt;
+&lt;?import javafx.scene.layout.VBox?&gt;
+
+&lt;VBox spacing="8.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.javafxdemo.VBoxController"&gt;
+    &lt;padding&gt;
+        &lt;Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /&gt;
+    &lt;/padding&gt;
+    &lt;children&gt;
+        &lt;Label text="Nom :" /&gt;
+        &lt;TextField fx:id="nameField" /&gt;
+        &lt;Button text="Valider" onAction="#handleSubmit" /&gt;
+    &lt;/children&gt;
+&lt;/VBox&gt;</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/resources/com/example/javafxdemo/vbox-example.fxml</span></p>
+        </section>
+
+        <section class="section">
+            <h2>BorderPane</h2>
+            <p>Le BorderPane divise l'espace en cinq zones : TOP, BOTTOM, LEFT, RIGHT et CENTER. C'est idéal pour créer des mises en page classiques d'application avec menu, barre latérale et zone de contenu principale.</p>
+            <pre><code>import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class BorderPaneExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création du BorderPane
+        BorderPane borderPane = new BorderPane();
+        
+        // En-tête (TOP)
+        Label headerLabel = new Label("Application JavaFX");
+        headerLabel.setStyle("-fx-font-size: 20px; -fx-padding: 10px;");
+        borderPane.setTop(headerLabel);
+        
+        // Barre latérale (LEFT)
+        VBox sidebar = new VBox(10);
+        sidebar.setPrefWidth(100);
+        sidebar.getChildren().addAll(
+            new Button("Accueil"),
+            new Button("Profil"),
+            new Button("Messages"),
+            new Button("Paramètres")
+        );
+        borderPane.setLeft(sidebar);
+        
+        // Contenu principal (CENTER)
+        TextArea mainContent = new TextArea();
+        mainContent.setText("Zone de contenu principal");
+        borderPane.setCenter(mainContent);
+        
+        // Barre d'état (BOTTOM)
+        HBox statusBar = new HBox();
+        statusBar.getChildren().add(new Label("Connecté | Version 1.0"));
+        borderPane.setBottom(statusBar);
+        
+        // Panneau secondaire (RIGHT) - optionnel
+        VBox rightPanel = new VBox(10);
+        rightPanel.setPrefWidth(120);
+        rightPanel.getChildren().addAll(
+            new Label("Utilisateurs en ligne"),
+            new Label("- Alice"),
+            new Label("- Bob"),
+            new Label("- Charlie")
+        );
+        borderPane.setRight(rightPanel);
+        
+        // Configuration de la scène
+        Scene scene = new Scene(borderPane, 600, 400);
+        primaryStage.setTitle("Exemple BorderPane");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/BorderPaneExample.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>GridPane</h2>
+            <p>Le GridPane organise ses enfants dans une grille flexible de lignes et de colonnes. C'est idéal pour les formulaires et les interfaces tabulaires.</p>
+            <pre><code>import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
+public class GridPaneExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création du GridPane
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(20));
+        grid.setHgap(10); // Espacement horizontal
+        grid.setVgap(10); // Espacement vertical
+        
+        // Ajout des contrôles avec leurs coordonnées (col, row)
+        grid.add(new Label("Nom d'utilisateur:"), 0, 0);
+        grid.add(new TextField(), 1, 0);
+        
+        grid.add(new Label("Mot de passe:"), 0, 1);
+        grid.add(new PasswordField(), 1, 1);
+        
+        grid.add(new Label("Email:"), 0, 2);
+        grid.add(new TextField(), 1, 2);
+        
+        grid.add(new Label("Téléphone:"), 0, 3);
+        grid.add(new TextField(), 1, 3);
+        
+        Button submitButton = new Button("S'inscrire");
+        // Placement du bouton à la colonne 1, ligne 4, s'étend sur 1 col, 1 row
+        grid.add(submitButton, 1, 4);
+        
+        // Configuration de la scène
+        Scene scene = new Scene(grid, 350, 250);
+        primaryStage.setTitle("Exemple GridPane");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/GridPaneExample.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Autres conteneurs</h2>
+            
+            <h3>FlowPane</h3>
+            <p>Dispose les éléments les uns à côté des autres, puis passe à la ligne suivante lorsqu'il n'y a plus de place (comme un texte qui fait un retour à la ligne).</p>
+            <pre><code>import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
+
+public class FlowPaneExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création du FlowPane
+        FlowPane flow = new FlowPane();
+        flow.setPadding(new Insets(10));
+        flow.setHgap(10);
+        flow.setVgap(10);
+        
+        // Ajout de plusieurs boutons
+        for (int i = 1; i <= 15; i++) {
+            flow.getChildren().add(new Button("Bouton " + i));
+        }
+        
+        // Configuration de la scène
+        Scene scene = new Scene(flow, 300, 250);
+        primaryStage.setTitle("Exemple FlowPane");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/FlowPaneExample.java</span></p>
+
+            <h3>TilePane</h3>
+            <p>Similaire au FlowPane, mais tous les éléments ont la même taille, créant une grille uniforme.</p>
+            <pre><code>import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
+
+public class TilePaneExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création du TilePane
+        TilePane tile = new TilePane();
+        tile.setPadding(new Insets(10));
+        tile.setHgap(10);
+        tile.setVgap(10);
+        tile.setPrefColumns(4); // Nombre de colonnes préféré
+        
+        // Ajout de plusieurs boutons
+        for (int i = 1; i <= 12; i++) {
+            Button btn = new Button("Bouton " + i);
+            // Chaque bouton a la même taille
+            btn.setPrefWidth(100);
+            btn.setPrefHeight(100);
+            tile.getChildren().add(btn);
+        }
+        
+        // Configuration de la scène
+        Scene scene = new Scene(tile, 500, 400);
+        primaryStage.setTitle("Exemple TilePane");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/TilePaneExample.java</span></p>
+
+            <h3>StackPane</h3>
+            <p>Empile les éléments les uns sur les autres, comme des couches. Utile pour superposer des éléments ou créer des overlays.</p>
+            <pre><code>import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+public class StackPaneExample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Création du StackPane
+        StackPane stack = new StackPane();
+        
+        // Création d'un rectangle de fond
+        Rectangle rect = new Rectangle(300, 200);
+        rect.setFill(Color.LIGHTBLUE);
+        
+        // Création d'un bouton qui sera au-dessus du rectangle
+        Button button = new Button("Cliquez-moi");
+        
+        // Ajout des éléments au StackPane (l'ordre d'ajout détermine l'ordre d'empilement)
+        stack.getChildren().addAll(rect, button);
+        
+        // Configuration de la scène
+        Scene scene = new Scene(stack, 300, 200);
+        primaryStage.setTitle("Exemple StackPane");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+            <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/StackPaneExample.java</span></p>
+        </section>
+
+        <section class="section">
+            <h2>Démonstration interactive</h2>
+            <p>Cette démonstration montre visuellement la différence entre un HBox et un VBox. Le bouton permet de basculer entre les deux orientations :</p>
+            
+            <div class="flex-demo">
+                <div class="flex-item">Élément 1</div>
+                <div class="flex-item">Élément 2</div>
+                <div class="flex-item">Élément 3</div>
+            </div>
+            
+            <button id="toggle-orientation" class="btn">Afficher comme VBox</button>
+            
+            <p>Dans JavaFX, le principe est le même : un HBox aligne horizontalement et un VBox verticalement.</p>
+        </section>
+
+        <section class="section">
+            <h2>Conseils pratiques</h2>
+            <ul>
+                <li><strong>Imbrication de conteneurs</strong> : N'hésitez pas à imbriquer des conteneurs pour créer des mises en page complexes. Par exemple, un BorderPane comme conteneur principal avec des VBox dans ses différentes régions.</li>
+                <li><strong>Contraintes de taille</strong> : Utilisez <code>setPrefSize</code>, <code>setMinSize</code> et <code>setMaxSize</code> pour contrôler la taille des conteneurs.</li>
+                <li><strong>Alignement</strong> : La classe <code>javafx.geometry.Pos</code> permet de définir l'alignement dans les conteneurs avec <code>setAlignment(Pos.CENTER)</code> par exemple.</li>
+                <li><strong>Espacement</strong> : N'oubliez pas d'utiliser <code>setPadding</code> et <code>setSpacing</code> pour améliorer la lisibilité.</li>
+                <li><strong>Contraintes dans GridPane</strong> : Utilisez <code>GridPane.setColumnSpan</code> et <code>GridPane.setRowSpan</code> pour qu'un élément occupe plusieurs cellules.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Documentation JavaFX pour BUT2 Informatique</p>
+            <p>Licence MIT</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html> 
