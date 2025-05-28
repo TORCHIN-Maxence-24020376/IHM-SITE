@@ -61,7 +61,7 @@
             <p>JavaFX propose une large gamme de contrôles prêts à l'emploi. Voici les plus couramment utilisés :</p>
 
             <h3 id="label">Label</h3>
-            <p>Un contrôle simple qui affiche du texte non modifiable par l'utilisateur.</p>
+            <p>Un <a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/Label.html" target="_blank">Label</a> est un contrôle simple qui affiche du texte non modifiable par l'utilisateur.</p>
             <pre><code class="language-java">Label simpleLabel = new Label("Texte simple");
 
 // Label avec mise en forme
@@ -74,7 +74,7 @@ iconLabel.setGraphic(new ImageView(new Image("warning.png")));
 iconLabel.setContentDisplay(ContentDisplay.LEFT); // Icône à gauche du texte</code></pre>
 
             <h3 id="textfield">TextField et TextArea</h3>
-            <p>Contrôles permettant la saisie de texte par l'utilisateur. TextField est sur une ligne, TextArea sur plusieurs.</p>
+            <p>Contrôles permettant la saisie de texte par l'utilisateur. <a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/TextField.html" target="_blank">TextField</a> est sur une ligne, <a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/TextArea.html" target="_blank">TextArea</a> sur plusieurs.</p>
             <pre><code class="language-java">// Champ texte simple
 TextField nameField = new TextField();
 nameField.setPromptText("Entrez votre nom"); // Texte d'invite (placeholder)
@@ -95,7 +95,7 @@ commentArea.setPrefRowCount(5); // Hauteur préférée en nombre de lignes
 commentArea.setWrapText(true);  // Retour à la ligne automatique</code></pre>
 
             <h3 id="button">Button</h3>
-            <p>Bouton standard qui déclenche une action lorsqu'il est cliqué.</p>
+            <p>Le <a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/Button.html" target="_blank">Button</a> est un bouton standard qui déclenche une action lorsqu'il est cliqué.</p>
             <pre><code class="language-java">// Bouton simple avec texte
 Button submitButton = new Button("Valider");
 
@@ -108,7 +108,7 @@ Button dangerButton = new Button("Supprimer");
 dangerButton.getStyleClass().add("danger-button"); // Classe CSS personnalisée</code></pre>
 
             <h3 id="checkbox">CheckBox</h3>
-            <p>Case à cocher permettant de sélectionner/désélectionner une option.</p>
+            <p>La <a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/CheckBox.html" target="_blank">CheckBox</a> est une case à cocher permettant de sélectionner/désélectionner une option.</p>
             <pre><code class="language-java">// Case à cocher simple
 CheckBox rememberMeCheckbox = new CheckBox("Se souvenir de moi");
 
@@ -123,7 +123,7 @@ rememberMeCheckbox.selectedProperty().addListener((observable, oldValue, newValu
 });</code></pre>
 
             <h3 id="radiobutton">RadioButton</h3>
-            <p>Bouton radio permettant de sélectionner une option parmi un groupe d'options.</p>
+            <p>Le <a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/RadioButton.html" target="_blank">RadioButton</a> est un bouton radio permettant de sélectionner une option parmi un groupe d'options.</p>
             <pre><code class="language-java">// Création d'un groupe pour les boutons radio
 ToggleGroup paymentGroup = new ToggleGroup();
 
@@ -145,7 +145,7 @@ RadioButton selectedRadio = (RadioButton) paymentGroup.getSelectedToggle();
 String paymentMethod = selectedRadio.getText();</code></pre>
 
             <h3 id="combobox">ComboBox et ChoiceBox</h3>
-            <p>Listes déroulantes permettant de sélectionner une valeur parmi plusieurs options.</p>
+            <p>Listes déroulantes permettant de sélectionner une valeur parmi plusieurs options. <a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/ComboBox.html" target="_blank">ComboBox</a> (permet la saisie et la recherche) et <a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/ChoiceBox.html" target="_blank">ChoiceBox</a> (plus simple, sans saisie).</p>
             <pre><code class="language-java">// ComboBox (permet la saisie et la recherche)
 ComboBox<String> countryComboBox = new ComboBox<>();
 countryComboBox.getItems().addAll("France", "Allemagne", "Espagne", "Italie", "Royaume-Uni");
@@ -157,7 +157,7 @@ genderChoice.getItems().addAll("Homme", "Femme", "Non-binaire", "Préfère ne pa
 genderChoice.setValue("Préfère ne pas préciser"); // Valeur par défaut</code></pre>
 
             <h3 id="slider">Slider</h3>
-            <p>Curseur permettant de sélectionner une valeur numérique dans une plage définie.</p>
+            <p>Le <a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/Slider.html" target="_blank">Slider</a> est un curseur permettant de sélectionner une valeur numérique dans une plage définie.</p>
             <pre><code class="language-java">// Slider simple
 Slider volumeSlider = new Slider(0, 100, 50); // min, max, valeur initiale
 volumeSlider.setShowTickLabels(true);        // Afficher les étiquettes
@@ -167,7 +167,7 @@ volumeSlider.setMinorTickCount(4);           // 4 graduations mineures entre cha
 volumeSlider.setBlockIncrement(10);          // Incrément lors des clics sur la piste</code></pre>
 
             <h3 id="datepicker">DatePicker</h3>
-            <p>Contrôle permettant de sélectionner une date dans un calendrier.</p>
+            <p>Le <a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/DatePicker.html" target="_blank">DatePicker</a> est un contrôle permettant de sélectionner une date dans un calendrier.</p>
             <pre><code class="language-java">// DatePicker simple
 DatePicker birthDatePicker = new DatePicker();
 birthDatePicker.setPromptText("Date de naissance");
@@ -369,32 +369,32 @@ public class MultiHandlersExample extends Application {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>ActionEvent</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.base/javafx/event/ActionEvent.html" target="_blank">ActionEvent</a></td>
                         <td>Déclenché par un contrôle quand l'action principale est exécutée</td>
                         <td>Clic sur un bouton, appui sur Entrée dans un TextField</td>
                     </tr>
                     <tr>
-                        <td>MouseEvent</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/input/MouseEvent.html" target="_blank">MouseEvent</a></td>
                         <td>Événements liés à la souris</td>
                         <td>MOUSE_CLICKED, MOUSE_PRESSED, MOUSE_RELEASED, MOUSE_MOVED, MOUSE_ENTERED, MOUSE_EXITED</td>
                     </tr>
                     <tr>
-                        <td>KeyEvent</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/input/KeyEvent.html" target="_blank">KeyEvent</a></td>
                         <td>Événements liés au clavier</td>
                         <td>KEY_PRESSED, KEY_RELEASED, KEY_TYPED</td>
                     </tr>
                     <tr>
-                        <td>WindowEvent</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/stage/WindowEvent.html" target="_blank">WindowEvent</a></td>
                         <td>Événements liés à la fenêtre</td>
                         <td>WINDOW_SHOWING, WINDOW_SHOWN, WINDOW_HIDING, WINDOW_HIDDEN, WINDOW_CLOSE_REQUEST</td>
                     </tr>
                     <tr>
-                        <td>ScrollEvent</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/input/ScrollEvent.html" target="_blank">ScrollEvent</a></td>
                         <td>Événements de défilement</td>
                         <td>SCROLL, SCROLL_STARTED, SCROLL_FINISHED</td>
                     </tr>
                     <tr>
-                        <td>DragEvent</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/input/DragEvent.html" target="_blank">DragEvent</a></td>
                         <td>Événements de glisser-déposer</td>
                         <td>DRAG_ENTERED, DRAG_EXITED, DRAG_OVER, DRAG_DROPPED</td>
                     </tr>
@@ -427,8 +427,7 @@ new Thread(() -> {
 
     <footer>
         <div class="container">
-            <p>Documentation JavaFX pour BUT2 Informatique</p>
-            <p>Licence MIT</p>
+            <p>Documentation JavaFX.</p>
         </div>
     </footer>
 

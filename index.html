@@ -31,7 +31,7 @@
     <main class="container">
         <section class="section">
             <h1>JavaFX : Construire des interfaces graphiques modernes en Java</h1>
-            <p>Bienvenue dans cette documentation sur JavaFX, la bibliothèque d'interfaces graphiques standard pour Java. Ce site est conçu pour vous aider à comprendre et maîtriser JavaFX dans le cadre de votre formation BUT2 Informatique.</p>
+            <p>Bienvenue dans cette documentation sur JavaFX, la bibliothèque d'interfaces graphiques standard pour Java. Ce site est conçu pour vous aider à comprendre et maîtriser JavaFX.</p>
         </section>
 
         <!-- Sommaire flottant -->
@@ -67,7 +67,7 @@
             
             <div class="card">
                 <h3>Stage (Scène de théâtre)</h3>
-                <p>Le <span class="inline-code">Stage</span> représente la fenêtre principale de l'application. C'est le conteneur de plus haut niveau.</p>
+                <p>Le <span class="inline-code"><a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/stage/Stage.html" target="_blank">Stage</a></span> représente la fenêtre principale de l'application. C'est le conteneur de plus haut niveau.</p>
                 <pre><code class="language-java">Stage primaryStage = new Stage();
 primaryStage.setTitle("Mon application JavaFX");
 primaryStage.show();</code></pre>
@@ -75,7 +75,7 @@ primaryStage.show();</code></pre>
             
             <div class="card">
                 <h3>Scene (Décor)</h3>
-                <p>La <span class="inline-code">Scene</span> est contenue dans le Stage et contient à son tour tous les éléments graphiques. On peut changer de Scene pour montrer différentes vues.</p>
+                <p>La <span class="inline-code"><a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/Scene.html" target="_blank">Scene</a></span> est contenue dans le Stage et contient à son tour tous les éléments graphiques. On peut changer de Scene pour montrer différentes vues.</p>
                 <pre><code class="language-java">VBox root = new VBox();
 Scene scene = new Scene(root, 800, 600);
 primaryStage.setScene(scene);</code></pre>
@@ -83,7 +83,7 @@ primaryStage.setScene(scene);</code></pre>
             
             <div class="card">
                 <h3>Nodes (Acteurs)</h3>
-                <p>Les <span class="inline-code">Node</span> sont tous les éléments qui peuvent être placés dans une Scene : boutons, étiquettes, conteneurs, etc. Ils forment un graphe hiérarchique appelé "scene graph".</p>
+                <p>Les <span class="inline-code"><a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/Node.html" target="_blank">Node</a></span> sont tous les éléments qui peuvent être placés dans une Scene : boutons, étiquettes, conteneurs, etc. Ils forment un graphe hiérarchique appelé "scene graph".</p>
                 <pre><code class="language-java">Label label = new Label("Bonjour JavaFX");
 Button button = new Button("Cliquez-moi");
 root.getChildren().addAll(label, button);</code></pre>
@@ -200,13 +200,18 @@ public class HelloWorld extends Application {
     }
 }</code></pre>
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/HelloWorld.java</span></p>
+            <p>Éléments clés utilisés dans cet exemple:</p>
+            <ul>
+                <li><span class="inline-code"><a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/application/Application.html" target="_blank">Application</a></span> - Classe de base pour toutes les applications JavaFX</li>
+                <li><span class="inline-code"><a href="https://openjfx.io/javadoc/23/javafx.controls/javafx/scene/control/Label.html" target="_blank">Label</a></span> - Composant d'affichage de texte</li>
+                <li><span class="inline-code"><a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/layout/StackPane.html" target="_blank">StackPane</a></span> - Conteneur qui empile ses enfants au centre</li>
+            </ul>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>Documentation JavaFX pour BUT2 Informatique</p>
-            <p>Licence MIT</p>
+            <p>Documentation JavaFX.</p>
         </div>
     </footer>
 

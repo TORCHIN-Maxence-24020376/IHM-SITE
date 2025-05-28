@@ -79,7 +79,7 @@
 
         <section class="section" id="graphe-scene">
             <h2>Rappel : le graphe de scène</h2>
-            <p>Dans JavaFX, tous les éléments graphiques sont organisés en une structure hiérarchique appelée <strong>graphe de scène</strong> (Scene Graph). Ce graphe est composé de nœuds (Nodes) qui peuvent être :</p>
+            <p>Dans JavaFX, tous les éléments graphiques sont organisés en une structure hiérarchique appelée <strong>graphe de scène</strong> (Scene Graph). Ce graphe est composé de nœuds (<a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/Node.html" target="_blank">Nodes</a>) qui peuvent être :</p>
             <ul>
                 <li><strong>Contrôles</strong> : éléments interactifs comme des boutons, des champs texte, etc.</li>
                 <li><strong>Formes</strong> : éléments graphiques comme des rectangles, des cercles, etc.</li>
@@ -112,7 +112,7 @@ Stage (fenêtre)
             <p>Les conteneurs VBox et HBox sont parmi les plus simples et les plus utilisés. Ils arrangent leurs enfants en une ligne verticale (VBox) ou horizontale (HBox).</p>
             
             <h3>VBox</h3>
-            <p>Empile les éléments verticalement, de haut en bas.</p>
+            <p>Le conteneur <a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/layout/VBox.html" target="_blank">VBox</a> empile les éléments verticalement, de haut en bas.</p>
             <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -154,7 +154,7 @@ public class VBoxExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/VBoxExample.java</span></p>
 
             <h3>HBox</h3>
-            <p>Aligne les éléments horizontalement, de gauche à droite.</p>
+            <p>Le conteneur <a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/layout/HBox.html" target="_blank">HBox</a> aligne les éléments horizontalement, de gauche à droite.</p>
             <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -219,7 +219,7 @@ public class HBoxExample extends Application {
 
         <section class="section" id="borderpane">
             <h2>BorderPane</h2>
-            <p>Le BorderPane divise l'espace en cinq zones : TOP, BOTTOM, LEFT, RIGHT et CENTER. C'est idéal pour créer des mises en page classiques d'application avec menu, barre latérale et zone de contenu principale.</p>
+            <p>Le <a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/layout/BorderPane.html" target="_blank">BorderPane</a> divise l'espace en cinq zones : TOP, BOTTOM, LEFT, RIGHT et CENTER. C'est idéal pour créer des mises en page classiques d'application avec menu, barre latérale et zone de contenu principale.</p>
             <pre><code class="language-java">import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -289,7 +289,7 @@ public class BorderPaneExample extends Application {
 
         <section class="section" id="gridpane">
             <h2>GridPane</h2>
-            <p>Le GridPane organise ses enfants dans une grille flexible de lignes et de colonnes. C'est idéal pour les formulaires et les interfaces tabulaires.</p>
+            <p>Le <a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/layout/GridPane.html" target="_blank">GridPane</a> organise ses enfants dans une grille flexible de lignes et de colonnes. C'est idéal pour les formulaires et les interfaces tabulaires.</p>
             <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -344,7 +344,7 @@ public class GridPaneExample extends Application {
             <h2>Autres conteneurs</h2>
             
             <h3 id="flowpane">FlowPane</h3>
-            <p>Dispose les éléments les uns à côté des autres, puis passe à la ligne suivante lorsqu'il n'y a plus de place (comme un texte qui fait un retour à la ligne).</p>
+            <p>Le <a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/layout/FlowPane.html" target="_blank">FlowPane</a> dispose les éléments les uns à côté des autres, puis passe à la ligne suivante lorsqu'il n'y a plus de place (comme un texte qui fait un retour à la ligne).</p>
             <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -380,7 +380,7 @@ public class FlowPaneExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/FlowPaneExample.java</span></p>
 
             <h3 id="tilepane">TilePane</h3>
-            <p>Similaire au FlowPane, mais tous les éléments ont la même taille, créant une grille uniforme.</p>
+            <p>Le <a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/layout/TilePane.html" target="_blank">TilePane</a> est similaire au FlowPane, mais tous les éléments ont la même taille, créant une grille uniforme.</p>
             <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -421,7 +421,7 @@ public class TilePaneExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/TilePaneExample.java</span></p>
 
             <h3 id="stackpane">StackPane</h3>
-            <p>Empile les éléments les uns sur les autres, comme des couches. Utile pour superposer des éléments ou créer des overlays.</p>
+            <p>Le <a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/layout/StackPane.html" target="_blank">StackPane</a> empile les éléments les uns sur les autres, comme des couches. Utile pour superposer des éléments ou créer des overlays.</p>
             <pre><code class="language-java">import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -460,7 +460,7 @@ public class StackPaneExample extends Application {
             <p>Ce code va dans <span class="inline-code">src/main/java/com/example/javafxdemo/StackPaneExample.java</span></p>
 
             <h3 id="anchorpane">AnchorPane</h3>
-            <p>L'AnchorPane permet d'ancrer les éléments enfants aux bords du conteneur ou entre eux, avec des distances spécifiques. C'est particulièrement utile pour créer des mises en page complexes qui doivent s'adapter à différentes tailles de fenêtre.</p>
+            <p>L'<a href="https://openjfx.io/javadoc/23/javafx.graphics/javafx/scene/layout/AnchorPane.html" target="_blank">AnchorPane</a> permet d'ancrer les éléments enfants aux bords du conteneur ou entre eux, avec des distances spécifiques. C'est particulièrement utile pour créer des mises en page complexes qui doivent s'adapter à différentes tailles de fenêtre.</p>
             <pre><code class="language-java">import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -596,8 +596,7 @@ public class AnchorPaneExample extends Application {
 
     <footer>
         <div class="container">
-            <p>Documentation JavaFX pour BUT2 Informatique</p>
-            <p>Licence MIT</p>
+            <p>Documentation JavaFX.</p>
         </div>
     </footer>
 

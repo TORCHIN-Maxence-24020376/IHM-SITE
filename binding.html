@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Découvrez les propriétés et bindings JavaFX pour créer des interfaces réactives et synchronisées. Guide complet sur la liaison de données et les interfaces réactives en JavaFX.">
-    <title>Binding JavaFX - Documentation BUT2 Informatique</title>
+    <title>Binding JavaFX</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/pictures/logo.svg">
@@ -70,27 +70,27 @@
                 <tbody>
                     <tr>
                         <td>boolean</td>
-                        <td>BooleanProperty</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.base/javafx/beans/property/BooleanProperty.html" target="_blank">BooleanProperty</a></td>
                         <td>visibleProperty(), disableProperty()</td>
                     </tr>
                     <tr>
                         <td>int</td>
-                        <td>IntegerProperty</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.base/javafx/beans/property/IntegerProperty.html" target="_blank">IntegerProperty</a></td>
                         <td>tabCountProperty()</td>
                     </tr>
                     <tr>
                         <td>double</td>
-                        <td>DoubleProperty</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.base/javafx/beans/property/DoubleProperty.html" target="_blank">DoubleProperty</a></td>
                         <td>opacityProperty(), widthProperty()</td>
                     </tr>
                     <tr>
                         <td>String</td>
-                        <td>StringProperty</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.base/javafx/beans/property/StringProperty.html" target="_blank">StringProperty</a></td>
                         <td>textProperty(), titleProperty()</td>
                     </tr>
                     <tr>
                         <td>Object</td>
-                        <td>ObjectProperty&lt;T&gt;</td>
+                        <td><a href="https://openjfx.io/javadoc/23/javafx.base/javafx/beans/property/ObjectProperty.html" target="_blank">ObjectProperty</a>&lt;T&gt;</td>
                         <td>styleProperty(), valueProperty()</td>
                     </tr>
                 </tbody>
@@ -170,7 +170,7 @@ public class Product {
 
         <section class="section" id="binding-unidirectionnel">
             <h2>Binding unidirectionnel</h2>
-            <p>Le binding unidirectionnel crée une dépendance à sens unique entre deux propriétés. Lorsque la propriété source change, la propriété cible est automatiquement mise à jour.</p>
+            <p>Le <a href="https://openjfx.io/javadoc/23/javafx.base/javafx/beans/binding/package-summary.html" target="_blank">binding</a> unidirectionnel crée une dépendance à sens unique entre deux propriétés. Lorsque la propriété source change, la propriété cible est automatiquement mise à jour.</p>
             
             <h3>Exemple avec bind()</h3>
             <pre><code class="language-java">import javafx.application.Application;
@@ -281,14 +281,14 @@ public class BidirectionalBindingExample extends Application {
             <p>Points importants à noter sur le binding bidirectionnel :</p>
             <ul>
                 <li>Les deux propriétés peuvent être modifiées, et les changements sont propagés mutuellement</li>
-                <li>Pour les bindings entre différents types (comme String et Number), un convertisseur est nécessaire</li>
+                <li>Pour les bindings entre différents types (comme String et Number), un <a href="https://openjfx.io/javadoc/23/javafx.base/javafx/util/StringConverter.html" target="_blank">convertisseur</a> est nécessaire</li>
                 <li>Pour supprimer le binding, utilisez <code>unbindBidirectional()</code></li>
             </ul>
         </section>
 
         <section class="section" id="changelistener">
             <h2>ChangeListener</h2>
-            <p>Un <code>ChangeListener</code> permet d'exécuter du code personnalisé lorsqu'une propriété change de valeur.</p>
+            <p>Un <a href="https://openjfx.io/javadoc/23/javafx.base/javafx/beans/value/ChangeListener.html" target="_blank">ChangeListener</a> permet d'exécuter du code personnalisé lorsqu'une propriété change de valeur.</p>
             
             <pre><code class="language-java">import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -362,7 +362,7 @@ public class ChangeListenerExample extends Application {
 
         <section class="section" id="bindings-avances">
             <h2>Bindings avancés avec la classe Bindings</h2>
-            <p>La classe <code>Bindings</code> fournit des méthodes statiques pour créer des bindings plus complexes, notamment des expressions conditionnelles.</p>
+            <p>La classe <a href="https://openjfx.io/javadoc/23/javafx.base/javafx/beans/binding/Bindings.html" target="_blank">Bindings</a> fournit des méthodes statiques pour créer des bindings plus complexes, notamment des expressions conditionnelles.</p>
             
             <h3>Exemple de Bindings.when().then().otherwise()</h3>
             <pre><code class="language-java">import javafx.application.Application;
@@ -612,8 +612,7 @@ public class ResizeListenerExample extends Application {
 
     <footer>
         <div class="container">
-            <p>Documentation JavaFX pour BUT2 Informatique</p>
-            <p>Licence MIT</p>
+            <p>Documentation JavaFX.</p>
         </div>
     </footer>
 
